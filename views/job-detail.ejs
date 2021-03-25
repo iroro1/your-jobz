@@ -78,7 +78,9 @@
     <h4>Job Description </h4>
        <div class="vertical-space-20"></div>
     <h4>Experience & Requirement</h4>
-    <p class="margin-bottom"> <%= post.content %> </p>
+    <% post.content.forEach(c=>{ %>
+      <p class=" margin-bottom h5" ><%= c%></p>
+      <%})%>
 
     </div>
     </div>

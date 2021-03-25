@@ -362,8 +362,9 @@ app
           else if(req.params.tk.startsWith('job-detail-')){
             const id = req.params.tk.slice(11)
             console.log(id)
-            const post = await findOneObject(Job, "_id", id)
-            console.log(post)
+            let post = await findOneObject(Job, "_id", id)
+            const content2 = post.content.split("\n");
+            post = { ...post._doc, content: content2 };
             res.render('job-detail',{auth: req.user,post, type:"job-detail", category, location, typeOfJob: type})
           } 
           else if(req.params.tk.startsWith('add-Job')){
