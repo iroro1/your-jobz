@@ -31,36 +31,40 @@
         <img src="imags/blog2.jpg" class="job-detail-img" alt="">
     <%}%>
     <div class="vertical-space-20"></div>
-    <p class="container h4" ><%= post.content %></p>
+    <% post.content.forEach(c=>{ %>
+      <p class="container h5" ><%= c%></p>
+      <%})%>
     </div>
     </section>
     <section id="comment" class="background-color-full-white-light">
     <div class="container">
     <div class="max-width-80">
     <h4>comment</h4>
-    <a href="#" class="Share">Share</a>
+    <a  href="https://twitter.com/intent/tweet?url=https://yourjobz.com&&content=Get job updates at your finger tips now!!!"
+    rel="noopener" class="Share"><i class="fa fa-share"></i> Twiiter</a>
     <% post.comments.forEach(com => { %>
         <div class="media border p-3 ">
-            <% if(auth && auth.imgurl ){ %> 
-                <img src="<%= imgurl %> " alt=""
-                class="mr-3 rounded-circle imagess" style="width:60px;" />
+            <% if(auth && auth.imgUrl ){ %> 
+                <img src="<%= auth.imgUrl %> " alt=""
+                class="mr-3 rounded-circle imagess" style="width:60px; height: 60px;" />
                  <%}else{%> 
                     <% if(auth && auth.gender==="male" ){ %> 
                       <span class="samp">
     
                         <img src="/imags/male-pic.jpg"  alt="
-                        kkk" class="mr-3 rounded-circle imagess " style="width:60px;" /> 
+                        kkk" class="mr-3 rounded-circle imagess " style="width:60px; height: 60px;" /> 
                       </span>
                       <%}else{%>
                         <span class="samp">
                           <img src="/imags/female-pic.jpg"  alt="
-                          kkk" class="mr-3 rounded-circle imagess " style="width:60px;" /> 
+                          kkk" class="mr-3 rounded-circle imagess " style="width:60px; height: 60px;" /> 
                         </span>
                   <%}%>
                 <%}%>
             <div class="media-body">
             <h6><%= com.author %></h6>
-            <p><%= com.content %></p>
+            <b><%= com.content %></b> <br>
+            
             </div>
             </div>
     <%} )%>
@@ -68,20 +72,20 @@
     </div>
     <% if(auth){ %>
     <div class="media border p-3 padding-none border-none">
-        <% if(auth.imgurl ){ %> 
-            <img src="<%= imgurl %> " alt=""
-            class="mr-3 rounded-circle imagess" style="width:60px;" />
+        <% if(auth.imgUrl ){ %> 
+            <img src="<%= auth.imgUrl %> " alt=""
+            class="mr-3 rounded-circle imagess" style="width:60px; height: 60px;" />
              <%}else{%> 
                 <% if(auth.gender==="male" ){ %> 
                   <span class="samp">
 
                     <img src="/imags/male-pic.jpg"  alt="
-                    kkk" class="mr-3 rounded-circle imagess " style="width:60px;" /> 
+                    kkk" class="mr-3 rounded-circle imagess " style="width:60px; height: 60px;" /> 
                   </span>
                   <%}else{%>
                     <span class="samp">
                       <img src="/imags/female-pic.jpg"  alt="
-                      kkk" class="mr-3 rounded-circle imagess " style="width:60px;" /> 
+                      kkk" class="mr-3 rounded-circle imagess " style="width:60px; height: 60px;" /> 
                     </span>
               <%}%>
             <%}%>

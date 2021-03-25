@@ -95,7 +95,9 @@ const updateItemObjectFromForm = (prev, update) =>{
     return res
  
 }
-
+const breakInLines = () =>{
+  
+}
 const filterObj = (arrayToFilter,filField, filterArg) =>{
   return arrayToFilter.filter(el => el[filField] === filterArg)
 }
@@ -171,6 +173,7 @@ const isAuthenticated = email=> {
 }
 module.exports = {
   updateItemObjectFromForm,
+  breakInLines,
   paginate,
   formatDate,
   generateToken,

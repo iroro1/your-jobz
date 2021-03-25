@@ -38,13 +38,11 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname));
 
-// app.use('/', home)
-
 // memory leak fix
 app.set('trust proxy', 1);
 app.use(
   session({
-    secret: process.env.SECRET,//enter secret in .env file
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
   })
@@ -87,7 +85,6 @@ passport.deserializeUser(function (id, done) {
 app
   .route("/login")
   .get((req, res) => {
-    // console.log(req.headers.referer)
     // Auto Login
     if(req.user) res.redirect('/')
     else{
@@ -177,6 +174,7 @@ app
         console.log(counts)
         const index = location.lagos.findIndex(loc => loc.value === found.location)
         found.location = location.lagos[index].display
+        console.log(found)
         res.render('dashboard',{auth: req.user , found, counts})
       } catch (error) {
         console.log(error)        
@@ -261,7 +259,10 @@ app
           else if(req.params.tk.startsWith('blog')){
             const id = req.params.tk.slice(5)
             console.log(id)
-            const post = await findOneObject(Blog, "_id", id)
+            let post = await findOneObject(Blog, "_id", id)
+            const content2 = post.content.split("\n");
+            post = { ...post._doc, content: content2 };
+            console.log(post.content)
             res.render('blog-detail',{auth: req.user, post})
           } 
           else if(req.params.tk.startsWith('del-work-exp-')){
