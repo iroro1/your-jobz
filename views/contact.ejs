@@ -1,0 +1,57 @@
+<%- include('./partials/header.ejs') %>
+<section id="Contact_us">
+    <!-- <div id="map" style="width: 100%;
+             height: 100vh"></div> -->
+             <div  style="width: 100%;
+             height: 80vh; padding-top: 8rem;" class="map_main">
+                <div class="map-responsive">
+                   <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA0s1a7phLN0iaD6-UE7m4qP-z21pH0eSc&amp;q=lagos+ikorodu+W/Africa" width="600" height="360" frameborder="0" style="border:0; width: 100%;" allowfullscreen=""></iframe>
+                </div>
+             </div>
+    </section>
+<section id="Get-in-Touch">
+    <div class="container text-center position-absolute">
+    <div class="Get-in-Touch-box">
+    <h3 class="text-left">Get in Touch</h3>
+    <div class="vertical-space-5"></div>
+    <p class="text-left">Lorem ipsum tempus amet conubia adipiscing fermentum viverra gravida sodales luctus nulla</p>
+    <div class="vertical-space-40"></div>
+    <form method="POST" action="/contact">
+    <div class="row">
+    <div class=" col-lg-6 col-md-12">
+    <div class="form-group">
+    <input type="text" name="name" class="form-control" placeholder="Full name" required />
+    <span class="fa fa-user icone "></span>
+    </div>
+    </div>
+    <div class=" col-lg-6 col-md-12">
+    <div class="form-group">
+    <input type="text" name="subject" class="form-control" placeholder="Subject" required />
+    <span class="fa fa-file icone "></span>
+    </div>
+    </div>
+    <div class=" col-lg-6 col-md-12">
+    <div class="form-group">
+    <input type="email" name="email" class="form-control" placeholder="Email address" required />
+    <span class="fa fa-envelope icone "></span>
+    </div>
+    </div>
+    <div class=" col-lg-6 col-md-12">
+    <div class="form-group">
+    <input type="tel" name="phone" class="form-control" placeholder="Phone number" required />
+    <span class="fa fa-phone icone "></span>
+    </div>
+    </div>
+    <div class=" col-lg-12 col-md-12">
+    <div class="form-group">
+    <textarea class="form-control" name="message" placeholder="Message" rows="3" required></textarea>
+    </div>
+    </div>
+    </div>
+    <button type="submit" class="Send">Send</button>
+    <input type="hidden" name="type" value="contact-form">
+    </form>
+    </div>
+    </div>
+    </section>
+<%- include('./partials/footer.ejs') %>

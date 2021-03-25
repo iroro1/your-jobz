@@ -1,0 +1,49 @@
+<%- include('./partials/header.ejs') %>
+<section id="Blog">
+    <div class="vertical-space-100"> </div>
+    <div class="vertical-space-101"> </div>
+    <div class="container">
+    <h3>Our Latest Blog Posts</h3>
+    <div class="vertical-space-20"></div>
+    <p>Welcome to our blog. Please engage in the reads as they are meant to be highly educative. Get in touch with us for adverts or donations.</p>
+    <div class="vertical-space-50"></div>
+    <div class="row">
+    <% posts.forEach(post=>{ %>
+    <div class="col-lg-4 col-md-6">
+        <% if(post.imgUrl){ %>
+            <img src="imags/blog2.jpg" class="blog-image" alt="">
+        <%}else{%>
+            <img src="imags/blog2.jpg" class="blog-image" alt="">
+        <%}%>
+        <div class="blog-box">
+        <a href="/blog-<%= post._id %>" class="font-color-black font-size"><%= post.title %></a>
+        <p class="float-left font-color-black width"><a href="#" class="font-color-black font-size-14"><%= post.datePosted.toUTCString() %></a> | <a href="#" class="font-color-black font-size-14"><%= post.estimatedReadTime %> min read</a></p>
+        <p class="space10"><%= post.content.slice(0,65) %> </p>
+        <div class="vertical-space-20"></div>
+        <div class="row">
+        <a href="/blog-<%= post._id %>" class="font-color-orange font-bold">Read more<i class="fa fa-long-arrow-right"></i></a>
+       
+        </div>
+        </div>
+        </div>
+        <% })%>
+
+    <div class="vertical-space-25"></div>
+    <div class="job-list">
+    <ul class="pagination justify-content-end margin-auto">
+    <li class="page-item"><a class="page-link pdding-none" href="javascript:void(0);"><i class=" material-icons keyboard_arrow_left_right"></i></a></li>
+    <li class="page-item"><a class="page-link active" href="javascript:void(0);">1</a></li>
+    <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+    <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+    <li class="page-item"><a class="page-link" href="javascript:void(0);">4</a></li>
+    <li class="page-item">
+    <a class="page-link pdding-none" href="javascript:void(0);"> <i class=" material-icons keyboard_arrow_left_right"></i></a>
+    </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+    <div class="vertical-space-60"> </div>
+    </section>
+
+<%- include('./partials/footer.ejs') %>

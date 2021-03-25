@@ -1,0 +1,287 @@
+<%- include('partials/header') %>
+
+<div class="container mt-5 register">
+
+    <% if(type==="add-education"){%>
+        <h1>Add Education</h1>
+        <div class="row">
+            <div class="col-sm-8 mx-auto">
+              <div class="card">
+                <div class="card-body">
+                  <form action="/update/user" method="POST">
+                    <div class="form-group">
+                      <label for="nameOfSchool">Name of Institution</label>
+                      <input type="text" class="form-control" name="nameOfSchool" />
+                    </div>
+                    <div class="form-group">
+                      <label for="degree">Degree</label>
+                      <input type="text" class="form-control" name="degree" />
+                    </div>
+                    <div class="form-group">
+                      <label for="startYear">Year Started</label>
+                      <input type="date" class="form-control" name="startYear" required />
+                    </div>
+                    <div class="form-group">
+                      <label for="endYear">Year Finished</label>
+                      <input type="date" class="form-control" name="endYear" />
+                    </div>
+
+                    <button type="submit" class="btn background-color-orange text-white">Save</button>
+                    <input type="hidden" name="type" value="add-education">
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+    <%} else if(type==="add-experience"){%>
+        <h1>Add Experience</h1>
+        <div class="row">
+            <div class="col-sm-8 mx-auto">
+              <div class="card">
+                <div class="card-body">
+                  <form action="/update/user" method="POST">
+                    <div class="form-group">
+                      <label for="jobTitle">Job Title</label>
+                      <input type="text" class="form-control" name="jobTitle" />
+                    </div>
+                    <div class="form-group">
+                      <label for="companyTitle">Company</label>
+                      <input type="text" class="form-control" name="companyTitle" />
+                    </div>
+                    <div class="form-group">
+                      <label for="startWork">Started work</label>
+                      <input type="date" class="form-control" name="startWork" required/>
+                    </div>
+                    <div class="form-group">
+                      <label for="stopWork">Stopped Work</label>
+                      <input type="date" class="form-control" name="stopWork" />
+                    </div>
+                  
+                    <button type="submit" class="btn background-color-orange text-white">Save</button>
+                    <input type="hidden" name="type" value="add-experience">
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+    <%} else if(type==="add-post"){%>
+      <h1>Add Blog Post</h1>
+      <div class="row">
+          <div class="col-sm-8 mx-auto">
+            <div class="card">
+              <div class="card-body">
+                <form action="/update/user" method="POST">
+                  <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" name="title" />
+                  </div>
+                  <div class="form-group">
+                    <label for="content">Content</label>
+                    <textarea class="form-control" name="content" id="" cols="30" rows="10" draggable="false"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="estimatedReadTime">Read Time (In Minutes)</label>
+                    <input type="text" class="form-control" name="estimatedReadTime" />
+                  </div>
+                  <div class="form-group">
+                    <label for="imgUrl"> Image Url</label>
+                    <input type="text" class="form-control" name="imgUrl" />
+                  </div>                
+                  <button type="submit" class="btn background-color-orange text-white">Save</button>
+                  <input type="hidden" name="type" value="add-post">
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <%} else if(type==="edit-post"){%>
+          <h1>Edit Post</h1>
+          <div class="row">
+              <div class="col-sm-8 mx-auto">
+                <div class="card">
+                  <div class="card-body">
+                    <form action="/update/user" method="POST">
+                      <div class="form-group">
+                        <label for="title">Title</label>
+                        <input placeholder="<%=blog.title%>" value="<%=blog.title%>" type="text" class="form-control" name="title" />
+                      </div>
+                      <div class="form-group">
+                        <label for="content">Content</label>
+                        <textarea  placeholder="<%=blog.title%>" class="form-control" name="content" id="" cols="30" rows="10" draggable="false"></textarea>
+                      </div>
+                      <div class="form-group">
+                        <label for="estimatedReadTime">Read Time (In Minutes)</label>
+                        <input value="<%=blog.estimatedReadTime%>" placeholder="<%=blog.estimatedReadTime%> type="text" class="form-control" name="estimatedReadTime" />
+                      </div>
+                      <div class="form-group">
+                        <label for="imgUrl"> Image Url</label>
+                        <input type="text" value="<%=blog.imageUrl%>"  placeholder="<%=blog.imageUrl%>" class="form-control" name="imgUrl" />
+                      </div>                
+                      <button type="submit" class="btn background-color-orange text-white">Save</button>
+                      <input type="hidden" name="type" value="edit-post">
+                      <input type="hidden" name="id" value="<%=blog._id%>">
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+    <%} else if(type==="add-job"){%>
+      <h1>Add Job Post</h1>
+      <div class="row">
+          <div class="col-sm-8 mx-auto">
+            <div class="card">
+              <div class="card-body">
+                <form action="/update/user" method="POST">
+                  <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" name="title" />
+                  </div>
+                  <div class="form-group">
+                    <label for="company">Company</label>
+                    <input type="text" class="form-control" name="company" />
+                  </div>
+                  <div class="form-group">
+                    <label for="content">Content</label>
+                    <textarea placeholder="Enter detailed job description, experience and requirements." class="form-control" name="content" id="" cols="30" rows="10" draggable="false"></textarea>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="deadline">Deadline</label>
+                    <input type="date" class="form-control" name="deadline" />
+                  </div>
+                 
+                  <div class="form-group">
+                    <label for="location">Location</label>
+                    <select class="form-control form-select" name="location" id="location">
+                      <% location.lagos.forEach(cat=> {%>
+                      <option class="option-item" value="<%= cat.value %>" selected><%= cat.display.toUpperCase() %></option>
+                      <%})%>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="category">Category</label>
+                    <select class="form-control form-select" name="category" id="category">
+                      <% category.forEach(cat=> {%>
+                      <option class="option-item" value="<%= cat.value %>" selected><%= cat.display.toUpperCase() %></option>
+                      <%})%>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="typeOfJob">Type Of Job</label>
+                    <select class="form-control form-select" name="typeOfJob" id="typeOfJob">
+                      <% typeOfJob.forEach(cat=> {%>
+                      <option class="option-item" value="<%= cat.value %>" selected><%= cat.display.toUpperCase() %></option>
+                      <%})%>
+                    </select>
+                  </div>
+                            
+                  <div class="form-group">
+                    <label for="yearsOfExp"> Years of Experience</label>
+                    <input type="text" class="form-control" name="yearsOfExp" />
+                  </div>                
+                  <div class="form-group">
+                    <label for="salary">Monthly Salary</label>
+                    <input type="text" class="form-control" name="salary" />
+                  </div>                
+                  <div class="form-group">
+                    <label for="imgUrl"> Image Url</label>
+                    <input type="text" class="form-control" name="imgUrl" />
+                  </div>                
+                  <div class="form-group">
+                    <label for="logoUrl"> Logo Url</label>
+                    <input type="text" class="form-control" name="logoUrl" />
+                  </div>                
+                  <div class="form-group">
+                    <label for="applyLink"> Application Link(Url)</label>
+                    <input type="text" class="form-control" name="applyLink" />
+                  </div>                
+                  <button type="submit" class="btn background-color-orange text-white">Post</button>
+                  <input type="hidden" name="type" value="add-job">
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+    <%} else if(type==="edit-job"){%>
+      <h1>Edit Job Post</h1>
+      <div class="row">
+          <div class="col-sm-8 mx-auto">
+            <div class="card">
+              <div class="card-body">
+                <form action="/update/user" method="POST">
+                  <div class="form-group">
+                    <label for="title">Title</label>
+                    <input value="<%=post.title%>" placeholder="<%=post.title%>" type="text" class="form-control" name="title" />
+                  </div>
+                  <div class="form-group">
+                    <label for="company">Company</label>
+                    <input value="<%=post.company%>" placeholder="<%=post.company%>" type="text" class="form-control" name="company" />
+                  </div>
+                  <div class="form-group">
+                    <label for="content">Content</label>
+                    <textarea placeholder="<%=post.content%>" placeholder="Enter detailed job description, experience and requirements." class="form-control" name="content" id="" cols="30" rows="10" draggable="false"></textarea>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="deadline">Deadline</label>
+                    <input type="date" value="<%=post.deadline%>" placeholder="<%=post.deadline%>" class="form-control" name="deadline" />
+                  </div>
+                 
+                  <div class="form-group">
+                    <label for="location" >Location</label>
+                    <select class="form-control form-select" name="location" id="location"> 
+                      <% location.lagos.forEach(cat=> {%>
+                      <option class="option-item" value="<%= cat.value %>" selected="<%=post.location%>" ><%= cat.display.toUpperCase() %></option>
+                      <%})%>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="category">Category</label>
+                    <select class="form-control form-select" name="category" id="category">
+                      <% category.forEach(cat=> {%>
+                      <option class="option-item" value="<%= cat.value %>" selected="<%=post.category%>"><%= cat.display.toUpperCase() %></option>
+                      <%})%>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="typeOfJob">Type Of Job</label>
+                    <select class="form-control form-select" name="typeOfJob" id="typeOfJob">
+                      <% typeOfJob.forEach(cat=> {%>
+                      <option class="option-item" value="<%= cat.value %>" selected="<%=post.typeOfJob%>" ><%= cat.display.toUpperCase() %></option>
+                      <%})%>
+                    </select>
+                  </div>
+                            
+                  <div class="form-group">
+                    <label for="yearsOfExp"> Years of Experience</label>
+                    <input value="<%=post.yearsOfExp%>" placeholder="<%=post.yearsOfExp%>" type="text" class="form-control" name="yearsOfExp" />
+                  </div>                
+                  <div class="form-group">
+                    <label for="salary">Monthly Salary</label>
+                    <input value="<%=post.salary%>" placeholder="salary" type="text" class="form-control" name="salary" />
+                  </div>                
+                  <div class="form-group">
+                    <label for="imgUrl"> Image Url</label>
+                    <input value="<%=post.imgUrl%>" placeholder="<%=post.imgUrl%>" type="text" class="form-control" name="imgUrl" />
+                  </div>                
+                  <div class="form-group">
+                    <label for="logoUrl"> Logo Url</label>
+                    <input value="<%=post.logoUrl%>" placeholder="<%=post.logoUrl%>" type="text" class="form-control" name="logoUrl" />
+                  </div>                
+                  <div class="form-group">
+                    <label for="applyLink"> Application Link(Url)</label>
+                    <input value="<%=post.applyLink%>" placeholder="<%=post.applyLink%>" type="text" class="form-control" name="applyLink" />
+                  </div>                
+                  <button type="submit" class="btn background-color-orange text-white">Post</button>
+                  <input type="hidden" name="type" value="edit-job">
+                  <input type="hidden" name="id" value="<%=post._id%>">
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+  <%}%>
+
+</div>
+
+<%- include('partials/footer') %>

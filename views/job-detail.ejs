@@ -1,0 +1,121 @@
+<%- include('./partials/header.ejs') %>
+<section id="intro">
+    <div class="carousel-item active">
+    <div class="carousel-background"><img src="imags/slider/slider1.jpg" alt=""></div>
+    <div class="carousel-container">
+    <div class="carousel-content">
+    <h2 class="font-color-white">Job Result</h2>
+    <p class="font-color-white width-100"><a href="index.html" class="font-color-white">Home /</a><a href="Job_Category-2.html" class="font-color-white"> Job </a>/ Details
+    </p>
+    </div>
+    </div>
+    </div>
+    </section>
+    
+    
+    <section id="job-Details">
+    <div class="container background-color-full-white job-Details">
+    <div class="Exclusive-Product">
+    <h3><%=post.title%> Needed</h3>
+    <a href="<%=post.applyLink%>" class="Apply-Now">Apply Now</a>
+    <h6 class="font-color-orange"><%=post.company%></h6>
+    <span class="text">
+        <%  location.lagos.forEach(i=>{%>
+            <% if(i.value === post.location){ %>
+              <p>
+                <i class="fa fa-map mr-2"></i>  <%=i.display.toUpperCase() %>
+             </p>
+             <%}%>
+         <%})%>
+    <div class="row">
+        <div class="col-8 mr-auto">
+            <p>
+                <i class="fa fa-calendar mr-2 text-success"></i> <%=post.datePosted.toUTCString() %>
+            </p>
+            <p>
+                <i class="fa fa-calendar mr-2 text-danger"></i> <%=post.deadline.toUTCString() %>
+            </p>
+            <%  category.forEach(i=>{%>
+                <% if(i.value === post.category){ %>
+                  <p>
+                    <i class="fa fa-tv mr-2"></i> <%=i.display %>
+                 </p>
+                 <%}%>
+             <%})%>
+            <p>
+                <i class="fa fa-money mr-2"></i> <%=post.salary %>
+            </p>
+            <p>
+                <i class="fa fa-cog mr-2"></i> <%=post.yearsOfExp %> years experience.
+            </p>
+            <p>
+                <%  typeOfJob.forEach(i=>{%>
+                    <% if(i.value === post.typeOfJob){ %>
+                      <p>
+                        <i class="fa fa-user mr-2"></i> <%=i.display %>
+                     </p>
+                     <%}%>
+                 <%})%>
+            </p>
+        </div>
+        <% if(post.logoUrl){ %>
+            <img src="<%=logoUrl%>" alt="John Doe" class="mr-3 ">
+            <%}else{%>
+                <img src="imags/job-post-icone-1.png" alt="John Doe" class="mr-3 ">
+           <%}%>
+    </div>
+    <% if(auth && (auth.isRoot||auth.isAdmin)){ %>
+        <a href="edi-tjob-pos-<%= post._id %>" class="nav-link my-3 mx-3  btn background-color-orange text-white"><i class="fa fa-edit fa-2x"> Edit</i></a>
+        <a data-toggle="modal" data-target="#myModal" class="nav-link my-3 mx-3 btn btn-danger text-white"><i class="fa fa-trash fa-2x"> </i> </a>
+        <%}%>
+    </div>
+    <% if(post.imgUrl){ %>
+        <img src="<%= post.imgUrl %>" class="job-detail-img" alt="">
+    <%}else{%>
+        <img src="imags/blog2.jpg" class="job-detail-img" alt="">
+    <%}%>
+    <div class="Job-Description">
+    <h4>Job Description </h4>
+       <div class="vertical-space-20"></div>
+    <h4>Experience & Requirement</h4>
+    <p class="margin-bottom"> <%= post.content %> </p>
+
+    </div>
+    </div>
+    <div
+    class="modal fade"
+    id="myModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header"></div>
+        <div class="modal-body">
+          <div class="h6 text-center">
+            Are you sure you want to delete this item? 
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-dismiss="modal"
+          >
+            No
+          </button>
+          <a
+            type="button"
+            href="del-jobb-pos-<%= post._id %>"
+            class="btn btn-danger text-white"
+            >Yes</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+    </section>
+   
+<%- include('./partials/footer.ejs') %>

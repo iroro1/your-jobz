@@ -1,0 +1,61 @@
+ <%- include('partials/header') %>
+
+ <div class="row">
+<div class="col-md-4 mt-5 login">
+  <div class="container ml-4 ">
+    <div class="card-title font-color-orange text-center pt-4">
+
+      <h1>Email-List</h1>
+    </div>
+    <div style="max-height: 50%; overflow: auto; font-weight: bold;" class="card-body mt-5">
+      <hr>
+
+        <% emailList.forEach(mail=> {%>
+            <b class="my-2"><%= mail.email%></b>
+            <br>
+          <% })%>
+    </div>
+  </div>
+</div>
+<div class="container col-md-7 mt-5 login">
+  <h1>Contact Emails</h1>
+
+  <div class="row my-5">
+    <% if(unread.length>0){ %>
+      <a href="/mailUn" class="badge bg-dark text-white p-1 mx-auto">  <i class="fa fa-envelope"></i> <span class="mx-2"><%= unread.length%></span>  Unread E-Mails</a>
+    
+      <% }%>
+    <a href="/emails" class="badge background-color-orange text-white p-1 mx-auto"> <i class="fa fa-envelope"></i> All E-Mails</a>
+  </div>
+  <div class="container">
+
+  <div class="row">
+    <% emails.forEach(mail=> {%>
+    <div class=" mx-auto container ">
+      <div class="card my-1 px-5">
+        <div class="card-body">
+          <div class="row">
+            <a class="col-sm- nav-link text-dark" href="/mail-<%= mail._id %>">
+            <h3 ><%= mail.subject %></h3>
+          </a>
+        </div>
+        <div class="container">
+          
+          <div class="row mt-4 base">
+            <a class="mr-auto nav-link" href="mailto:@<%= mail.email %>"><small><%= mail.email %></small></a>  <small>02015585655</small>
+            <a href="#" class="btn btn-danger ml-auto"><i class="fa fa-trash"></i></a>
+            <small class="ml-auto mt-3"><b><%= mail.dateSent.toUTCString() %></b></small>
+            <p class="mt-2"><%= mail.message.slice(0,100) %>...</p>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <%})%>
+  </div>
+</div>
+
+</div>
+</div>
+
+<%- include('partials/footer') %>

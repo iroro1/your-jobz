@@ -1,0 +1,292 @@
+<%- include("partials/header") -%>
+<div class="max">
+
+  <div class="prof">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 mb-4 ">
+          <% if(found.imgurl ){ %> 
+            <img src="<%= imgurl %> " alt=""
+            class=" img-mem" />
+             <%}else{%> 
+                <% if(found.gender==="male" ){ %> 
+                  <span class="samp">
+
+                    <img src="/imags/male-pic.jpg"  alt="
+                    kkk" class=" img-mem " /> 
+                  </span>
+                  <%}else{%>
+                    <span class="samp">
+                      <img src="/imags/female-pic.jpg"  alt="
+                      kkk" class=" img-mem " /> 
+                    </span>
+              <%}%>
+            <%}%>
+          <div style="text-align: center">
+            <h1 class="d-title text-orange"> 
+              Welcome <br> <span class="text-orange user"> <%= auth.alias %>.</span>
+            </h1>
+          </div>
+          <div class="my-1 ">
+            <a
+            href="/update"
+            class="btn btn-sm btn-lg background-color-orange btn-block text-white "
+            ><i class="fa fa-edit"></i> Edit Profile</a
+          >
+          </div>
+          <div class="my-1">
+            <a
+            href="/<%= found.username %>"
+            class="btn btn-sm background-color-orange btn-block  text-white"
+            ><i class="fa fa-lock"></i> Change Password</a
+          >
+          </div>
+          <hr>
+          <div class="job-education">
+            <div class="my-1">
+              <a
+              href="/add-experience"
+              class="btn btn-sm background-color-orange btn-block  text-white"
+              ><i class="fa fa-plus mr-2"></i> Experience</a
+            >
+            </div>
+            <div class="my-1">
+              <a
+              href="/add-education"
+              class="btn btn-sm background-color-orange btn-block  text-white"
+              ><i class="fa fa-plus mr-2"></i> Education </a
+            >
+            </div>
+          </div>
+      <% if(auth && (auth.isRoot || auth.isAdmin) ){ %> 
+        <div class="admin">
+            <hr>
+            <h4>Admin Panel</h4>
+            <br>
+            <small>Current <a href="/all-users" class="font-color-orange">Users</a>:</small> <span><%=counts.uc%></span>
+            <br><br>
+            <small>Jobs:</small> <span><%=counts.jc%></span>
+            <br><br>
+            <small>Blog Posts:</small> <span><%=counts.bc%></span>
+            <hr>
+            <h6>Blog</h6>
+            <div class="my-1">
+              <a
+              href="/bloglist"
+              class="btn btn-sm background-color-orange btn-block  text-white"
+              ><i class="fa fa-eye mr-2"></i> All Posts</a
+            >
+            </div>
+            <div class="my-1">
+              <a
+              href="/add-post"
+              class="btn btn-sm background-color-orange btn-block  text-white"
+              ><i class="fa fa-plus mr-2"></i> Add Post</a
+            >
+            </div>
+            <hr>
+            <h6>Jobs</h6>
+            <div class="my-1">
+              <a
+              href="/joblist"
+              class="btn btn-sm background-color-orange btn-block  text-white"
+              ><i class="fa fa-cog mr-2"></i> All Jobs</a
+            >
+            </div>
+            <div class="my-1">
+              <a
+              href="/add-Job"
+              class="btn btn-sm background-color-orange btn-block  text-white"
+              ><i class="fa fa-plus mr-2"></i> Add Job</a
+            >
+            </div>
+            <hr>
+            <h6>EMAILS</h6>
+            <div class="my-1">
+              <a
+              href="/emails"
+              class="btn btn-sm background-color-orange btn-block  text-white"
+              ><i class="fa fa-envelope mr-2"></i> All Mails</a
+            >
+            </div>
+            <hr>
+            <h6>USERS</h6>
+            <div class="my-1">
+              <a
+              href="/all-users"
+              class="btn btn-sm background-color-orange btn-block  text-white"
+              ><i class="fa fa-user mr-2"></i> All Users</a
+            >
+            </div>
+
+        </div>
+        <%}%>
+
+        </div>
+        <div class="col-md-8 dashboard table-responsive ">
+          <h3 style="color: #f26c4f; margin-bottom: 1rem;">Data</h3>
+          <table class="table  table-hover table-condensed mb-5">
+            <tbody>
+              <tr>
+                <td>Full Name</td>
+                <td contenteditable="true"><%= found.alias.charAt(0).toUpperCase()+found.alias.slice(1) %></td>
+              </tr>
+              <tr>
+                <td>Phone</td>
+                <td contenteditable="true"><%= found.phone %></td>
+              </tr>
+              <tr>
+                <td>Email</td>
+                <td><%= found.username %></td>
+              </tr>
+              <tr>
+                <td>Gender</td>
+                <td><%= found.gender.charAt(0).toUpperCase()+found.gender.slice(1) %></td>
+              </tr>
+              <tr>
+                <td>Date Joined</td>
+                <td><%= found.dateJoined.toLocaleString() %></td>
+              </tr>
+              <tr>
+                <td>Highest level of education</td>
+                <td><%= found.highest_level_education.charAt(0).toUpperCase()+found.highest_level_education.slice(1) %></td>
+              </tr>
+              <tr>
+                <td>Location</td>
+                <td><%= found.location.charAt(0).toUpperCase()+found.location.slice(1) %></td>
+              </tr>
+             
+            
+            </tbody>
+            
+          </table>
+
+            <div class="row">
+                <h3 style="color: #f26c4f;">Work Experience</h3>
+                <div class="mt-5">
+                <% found.work_experience.forEach( e  => {%>
+                    <div class="ed11">
+                      <h4 class="do-title" id="exp-tit"><%= e.jobTitle %> </h4>
+                      <div class="row mt-3 ed1-exp" id="ed1-exp">
+                        <small class="do-title-sm" style="color: #f26c4f;"><%= e.companyTitle %></small>
+                        <b><%= e.startWork.slice(0,4) %> 
+                          <%if(e.stopWork){%>
+                            - <%= e.stopWork.slice(0,4) %>
+                            <%}else{%>
+                              -  Present
+                            <%}%>
+                            
+                        </b>
+                      </div>
+                      <div class="row ">
+                        <a data-toggle="modal" data-target="#myModal<%= auth._id%>"  class="mt-3 ml-auto badge badge-danger text-white"><i class="fa fa-trash"></i></a>
+                      </div>
+                    </div>
+                    <br>
+           <div
+            class="modal fade"
+            id="myModal<%= auth._id%>"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header"></div>
+                <div class="modal-body">
+                  <div class="h6 text-center">
+                    Are you sure you want to delete this item? 
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    data-dismiss="modal"
+                  >
+                    No
+                  </button>
+                  <a
+                    type="button"
+                    href="/del-work-exp-<%= auth._id%>-<%= e.id %>"
+                    class="btn btn-danger text-white"
+                    >Yes</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+  
+                  <%})%>
+                </div>
+            </div>
+            <div class="row">
+                <h3 style="color: #f26c4f;">Education</h3>
+                <div class="mt-5">
+                  <% if(found.education.length>0){%>
+                <% found.education.forEach( e  => {%>
+                    <div class="ed1">
+                        <h4 class="do-title" id="edu-tit"><%= e.nameOfSchool %> </h4>
+                        <div class="row mt-3 d-flex ed">
+                          <small class="do-title-sm" style="color: #f26c4f;"><%= e.degree %></small>
+                          <b><%= e.startYear.slice(0,4) %>
+                            <%if(e.endYear){%>
+                              -  <%= e.endYear.slice(0,4) %>
+                              <%}else{%>
+                                -   Ongoing
+                              <%}%>
+                        </div>
+                        <div class="row ">
+                          <a data-toggle="modal" data-target="#myModal2<%= auth._id%>" class="mt-3 ml-auto badge badge-danger text-white"><i class="fa fa-trash"></i></a>
+                        </div>
+                    </div>
+                  <br>
+                  <div
+                  class="modal fade"
+                  id="myModal2<%= auth._id%>"
+                  tabindex="-1"
+                  role="dialog"
+                  aria-labelledby="exampleModalCenterTitle"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header"></div>
+                      <div class="modal-body">
+                        <div class="h6 text-center">
+                          Are you sure you want to delete this item? 
+                          
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-primary"
+                          data-dismiss="modal"
+                        >
+                          No
+                        </button>
+                        <a
+                          type="button"
+                          href="/del-educ-exp-<%= auth._id%>-<%= e.id %>"
+                          class="btn btn-danger "
+                          >Yes</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                  <%})%>
+                  <% }%>
+
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <%- include("partials/footer") -%>
+</div>

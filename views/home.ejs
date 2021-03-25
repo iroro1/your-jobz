@@ -1,0 +1,113 @@
+<%- include('./partials/header.ejs')  %>
+
+<section id="intro">
+<div class="carousel-item active">
+<div class="carousel-background"><img src="imags/blog3.jpg" alt=""></div>
+<div class="carousel-container">
+<div class="carousel-content">
+<h2 class="font-color-white">One Place for all Jobs</h2>
+<p class="font-color-white h4">Get a daily update for all jobs in Lagos and beyond from one place. We make the research for you. We get the hottest jobs for each day from all over and hand them to you for free. All you need to do is register for an account and get your next job. </p>
+<a href="#" data-toggle="modal" data-target="#myModal"><i class=" material-icons play"><i class="fa fa-play ml-2">
+
+</i></i></a>
+</div>
+</div>
+</div>
+</section>
+
+
+<div id="search-box" class="margin-none mb-5">
+    <div class="container search-box">
+        <form action="/searchByLoc" method="POST" id="search-box_search_form_3" class="search-box_search_form d-flex flex-lg-row flex-column align-items-center justify-content-between ">
+            <div class="d-flex flex-row align-items-center justify-content-start inline-block">
+            <span class="large material-icons search"></span>
+            <input name="key" class="search-box_search_input" placeholder="Search Keyword" required="required" type="search">
+            <select name="cat" class="dropdown_item_select search-box_search_input">
+                <%  category.forEach(i=>{%>
+                    <option value="<%= i.value %>"><%= i.display %></option>
+                 <%})%>
+            </select>
+            <span class="large material-icons margin-top search"></span>
+            <input name="loc" class="search-box_search_input " placeholder="Location" required="required" type="search">
+            </div>
+            <input type="hidden" name="type" value="top-bar">
+            <button type="submit" class="search-box_search_button">Search Jobs</button>
+            </form>
+    </div>
+    </div>
+
+
+<div class="container pt-5">
+    <h3 class="title-jobted title font-color-orange">Why use Your Jobz</h3>
+    <p class="blockquote">So many job listings are available on a daily basis, but often can;t reach those in need. This platform id designed to help job seekers find all job updates in one place. We research the jobs for you, and link you to the best opportunities..</p>
+    <p class="blockquote">We are here to assist you in anyway we can. Always remember to check the blog section for interesting, educating and captivating posts. Do well to also <a class="font-color-orange" href="#em-market"> <b style="font-size: 1.3rem;">sign up</b></a> to our email list to stay up to date with our services and promotions. 
+    </p>
+</div>
+
+<section id="v2-resent-job-post">
+<div class="vertical-space-85"></div>
+<div class="container text-center">
+<h3 class="text-center">Recent Job Post</h3>
+<div class="vertical-space-30"></div>
+
+</p>
+<div class="vertical-space-60"></div>
+<div class="detail">
+    <% posts && posts.forEach(job=> {%>
+<hr class="mt-5">
+<div class="media display-inline text-align-center">
+    <% if(job.logoUrl){ %>
+        <img src="<%=logoUrl%>" alt="John Doe" class="mr-3 ">
+        <%}else{%>
+            <img src="imags/job-post-icone-1.png" alt="John Doe" class="mr-3 ">
+       <%}%>
+<div class="media-body text-left  text-align-center">
+<h6> <a href="job-detail-<%= job._id %>" class="font-color-black"><%= job.company%> is looking for a <%= job.title %></a></h6>
+<%  location.lagos.forEach(i=>{%>
+    <% if(i.value === job.location){ %>
+        <i class="fa fa-map mr-2"></i>  <%=i.display.toUpperCase() %>
+     <%}%>
+ <%})%> <br>   
+<span class="text "><i class="fa fa-calendar"></i> <%= job.yearsOfExp %> year(s) experience</span>
+<br />
+<span class="text font-size"> <i class="fa fa-money"></i> <%= job.salary %> monthly</span>
+<div class="float-right margin-top text-align-center">
+<a href="#" class="part-full-time">
+    <%  typeOfJob.forEach(i=>{%>
+        <% if(i.value === job.typeOfJob){ %>
+          <%= i.display %> 
+         <%}%>
+     <%})%>
+</a>
+<p class="date-time">Deadline: <%= job.deadline.getUTCDate() %>/<%= job.deadline.getUTCMonth() %>/<%= job.deadline.getUTCFullYear() %></p>
+</div>
+</div>
+</div>
+<%})%>
+</div>
+<div class="vertical-space-20"></div>
+<div class="vertical-space-25"></div>
+<div class="job-list">
+<ul class="pagination justify-content-end margin-auto">
+<li class="page-item"><a class="page-link pdding-none" href="javascript:void(0);"><i class=" material-icons keyboard_arrow_left_right"></i></a></li>
+<li class="page-item"><a class="page-link active" href="javascript:void(0);">1</a></li>
+<li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+<li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+<li class="page-item"><a class="page-link" href="javascript:void(0);">4</a></li>
+<li class="page-item">
+<a class="page-link pdding-none" href="javascript:void(0);"> <i class=" material-icons keyboard_arrow_left_right"></i></a>
+</li>
+</ul>
+</div>
+</div>
+<div class="vertical-space-60"></div>
+</section>
+
+
+
+
+<div class="vertical-space-85"></div>
+</div>
+</section> 
+
+<%- include('./partials/footer.ejs') %>

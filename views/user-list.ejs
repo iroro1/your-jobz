@@ -1,0 +1,112 @@
+ <%- include('partials/header') %>
+
+ <div class="row">
+
+<div class="container col-md- mt-5 login">
+  <h1>Users</h1>
+
+  <div class="container">
+  <div class="row">
+    <% allUsers.forEach(user=> {%>
+    <div class=" mx-auto container ">
+      <div class="card my-1 px-5">
+        <div class="card-body">
+          <div class="row">
+          </a>
+            <a class="col-sm- nav-link text-dark" href="/user-details-<%= user._id %>">
+              <h6 ><%= user.username %></h6>    
+            </a>
+            <div class="ml-auto">
+              <a data-toggle="modal" data-target="#myModal2<%= auth._id%>"  class="btn background-color-orange"><i class="fa fa-cog text-white"> Make Admin</i></a>
+              <a data-toggle="modal" data-target="#myModal<%= auth._id%>"  class="btn btn-danger ml-auto text-white"><i class="fa fa-trash"></i></a>
+            </div>
+        </div>
+        <div class="container">
+          
+          <div class="row mt-4 base">
+            <a class="mr-auto nav-link text-dark href="userto:@<%= user.euser %>"><small><%= user.gender.toUpperCase()%></small></a> 
+            <small class="ml-auto mt-3"><b><%= user.dateJoined.toUTCString() %></b></small>
+            
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div
+    class="modal fade"
+    id="myModal<%= auth._id%>"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header"></div>
+        <div class="modal-body">
+          <div class="h6 text-center">
+            Are you sure you want to delete this item? 
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-dismiss="modal"
+          >
+            No
+          </button>
+          <a
+            type="button"
+            href="del-user-xxx-<%= user._id %>"
+            class="btn btn-danger text-white"
+            >Yes</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+    <div
+    class="modal fade"
+    id="myModal2<%= auth._id%>"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header"></div>
+        <div class="modal-body p-2">
+          <div class="h6 text-left">
+            Wait. Are you sure you want to make this user an Admin with
+                          all the privileges to create and delete anything they want
+                          from your database? 
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-dismiss="modal"
+          >
+            No
+          </button>
+          <a
+            type="button"
+            href="mak-user-adm-<%= user._id %>"
+            class="btn btn-danger text-white"
+            >Yes</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+    <%})%>
+  </div>
+</div>
+
+</div>
+</div>
+
+<%- include('partials/footer') %>

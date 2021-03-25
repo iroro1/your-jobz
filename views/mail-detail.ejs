@@ -1,0 +1,31 @@
+<%- include('./partials/header.ejs') %>
+<section id="intro">
+    <div class="carousel-item active">
+    <div class="carousel-background"><img src="imags/slider/slider1.jpg" alt=""></div>
+    <div class="carousel-container">
+    <div class="carousel-content">
+    <h2 class="font-color-white"><%= mail.subject %></h2>
+    <p class="font-color-white width-100"><a href="/" class="font-color-white">Home /</a><a href="/bloglist" class="font-color-white"> Mail </a>/ Details
+    </p>
+    </div>
+    </div>
+    </div>
+    </section>
+    
+    
+    <section  id="job-Details">
+    <div style="max-height: 50vh;" class="container background-color-full-white job-Details">
+    <div class="Exclusive-Product">
+    <h3><%= mail.subject %></h3>
+    <h6 class="font-color-orange">Email: <%= mail.email %></h6>
+    <h6 class="font-color-orange">Sender: <%= mail.name %></h6>
+    <h6 class="font-color-orange">Phone: <%= mail.phone %></h6>
+    <span class="text">Sent: <%= mail.dateSent.toUTCString() %></span>
+    </div>
+    <div class="container mb-5">
+        <p class="container text-dark" ><%= mail.message %></p>
+    </div>
+    </div>
+    </section>
+
+<%- include('./partials/footer.ejs') %>

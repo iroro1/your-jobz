@@ -1,0 +1,138 @@
+<%- include('./partials/header.ejs') %>
+<section id="intro" class="intro">
+    <div class="carousel-item active">
+    <div class="carousel-background"><img src="imags/slider/slider1.jpg" alt=""></div>
+    <div class="carousel-container">
+    <div class="carousel-content">
+    <h2 class="font-color-white">Find Jobs Now more Easy Way</h2>
+    <a href="#" data-toggle="modal" data-target="#myModal"><i class=" material-icons play"><i class="fa fa-play ml-2">
+
+    </i></i></a>
+    </div>
+    </div>
+    </div>
+    </section>
+    
+    
+    <div id="search-box" class="margin-none">
+    <div class="container search-box">
+    <form action="/searchByLoc" method="POST" id="search-box_search_form_3" class="search-box_search_form d-flex flex-lg-row flex-column align-items-center justify-content-between ">
+    <div class="d-flex flex-row align-items-center justify-content-start inline-block">
+    <span class="large material-icons search"></span>
+    <input name="key" class="search-box_search_input" placeholder="Search Keyword" required="required" type="search">
+    <select name="cat" class="dropdown_item_select search-box_search_input">
+        <%  category.forEach(i=>{%>
+            <option value="<%= i.value %>"><%= i.display %></option>
+         <%})%>
+    </select>
+    <span class="large material-icons margin-top search"></span>
+    <input name="loc" class="search-box_search_input " placeholder="Location" required="required" type="search">
+    </div>
+    <input type="hidden" name="type" value="top-bar">
+    <button type="submit" class="search-box_search_button">Search Jobs</button>
+    </form>
+    </div>
+    </div>
+    
+    
+    <section id="resent-job-post" class="background-color-white-drak">
+    <div class="vertical-space-85"></div>
+    <div class="container text-center">
+    <h4 class="text-left">Filter Jobs Result</h4>
+    <div class="vertical-space-30"></div>
+    <div class="row">
+    <div class="col-lg-4 col-md-12">
+        <form action="">
+    <div class="Job-Category-box">
+    <p class="title">Job Category</p>
+    <ul>
+    <%  category.forEach(i=>{%>
+        <li class="list-item "><a href="/all-cat-<%= i.value %>" class="font-color-black"><%= i.display %></a></li>
+     <%})%>
+    </ul>
+
+    </form>
+    </div>
+    <div class="Job-Nature-box">
+        <form action="">
+    <p class="title">Job Nature</p>
+    <ul>
+        <div class="form-group pl-2"> 
+            <li ><a href="/full-jobs" class="font-color-black">Full Time Jobs</a></li> <br>
+            <li ><a href="/part-jobs" class="font-color-black">Part Time Jobs</a></li> <br>
+            <li ><a href="/joblist" class="font-color-black">All Jobs</a></li> <br>
+        </div>
+    </ul>
+</form>
+    </div>
+    <form method="POST" action="/searchByLoc" style="height: 20rem;" class="search-box_search_form">
+          <div class="Salary-Range-box">
+
+    <p class="small-title">Location</p>
+    <input name="loc" class="search-box_search_input Location " placeholder="Location" required="required" type="search"> 
+    <span class="fa fa-map-marker location-icone"></span>
+    <input type="hidden" name="type" value="bar">
+    <div class="apply">
+        <input type="submit" value="Apply Filters" class="btn btn-orange btn-block"/>
+    
+    </div>
+    <hr>
+    </div>
+    <!-- ind -->
+    </div>
+    </form>
+    <div class="col-lg-8 col-md-12">
+        <div class="detail width-100 ">
+            <% jobs.forEach(job=> {%>
+                <div class="media display-inline text-align-center my-2">
+                    <% if(job.logoUrl){ %>
+                        <img src="<%=logoUrl%>" alt="John Doe" class="mr-3 ">
+                        <%}else{%>
+                            <img src="imags/job-post-icone-1.png" alt="John Doe" class="mr-3 ">
+                       <%}%>
+                <div class="media-body text-left  text-align-center">
+                <h6> <a href="job-detail-<%= job._id %>" class="font-color-black"><%= job.company%> is looking for a <%= job.title %></a></h6>
+                
+                <%  location.lagos.forEach(i=>{%>
+                    <% if(i.value === job.location){ %>
+                        <i class="fa fa-map mr-2"></i>  <%=i.display.toUpperCase() %>
+                     <%}%>
+                 <%})%> <br>
+                <span class="text mt-2"><i class="fa fa-calendar"></i> <%= job.yearsOfExp %> year(s) experience</span>
+                <br />
+                <span class="text font-size"><i class="fa fa-money"></i> <%= job.salary %></span>
+                <div class="float-right margin-top text-align-center">
+                <a href="#" class="part-full-time mt-5">
+                    <%  typeOfJob.forEach(i=>{%>
+                        <% if(i.value === job.typeOfJob){ %>
+                          <%= i.display %> 
+                         <%}%>
+                     <%})%>
+                </a>
+                <p class="date-time">Deadline: <%= job.deadline.getUTCDate() %>/<%= job.deadline.getUTCMonth() %>/<%= job.deadline.getUTCFullYear() %></p>
+                </div>
+                </div>
+                </div>
+                <hr class="mt-5">
+                <%})%>
+        </div>
+    <div class="vertical-space-20"></div>
+    <div class="vertical-space-25"></div>
+    <div class="job-list width-100">
+    <ul class="pagination justify-content-end margin-auto">
+    <li class="page-item"><a class="page-link pdding-none" href="javascript:void(0);"><i class=" material-icons keyboard_arrow_left_right"></i></a></li>
+    <li class="page-item"><a class="page-link active" href="javascript:void(0);">1</a></li>
+    <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+    <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+    <li class="page-item"><a class="page-link" href="javascript:void(0);">4</a></li>
+    <li class="page-item">
+    <a class="page-link pdding-none" href="javascript:void(0);"> <i class=" material-icons keyboard_arrow_left_right"></i></a>
+    </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div class="vertical-space-60"></div>
+    </section>
+<%- include('./partials/footer.ejs') %>

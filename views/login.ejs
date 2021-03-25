@@ -1,0 +1,55 @@
+ <%- include('partials/header') %>
+
+<div class="container mt-5 login">
+  <h1>Login</h1>
+
+  <div class="row">
+    <div class="col-8 mx-auto">
+      <div class="card">
+        <div class="card-body">
+          <% if(err){%>
+          <div class=" py-3 mb-1 text-center text-orange">
+            <b><%= err %></b>
+          </div>
+          <%}%>
+          <% if(suc) {%>
+            <div class=" py-3 mb-1 text-center text-success">
+            <b><%=suc %></b>
+          </div>
+            <% }%>
+          <!-- Makes POST request to /login route -->
+          <form action="/login" method="POST">
+            <div class="form-group">
+              <label class="mb-2" for="username"><b>Email</b></label>
+              <input type="email" class="form-control" name="username" />
+            </div>
+            <div class="form-group">
+              <label class="mb-2"  for="password"><b>Password</b></label>
+              <input
+                type="password"
+                class="form-control"
+                name="password"
+                minlength="6"
+              />
+            </div>
+            <button type="submit" class="btn background-color-orange text-white">Login</button>
+          </form>
+          <div class="pt-3">
+            <p class="pb-4"><small >You don't have an account?</small></p>
+            <div class="container">
+
+              <div class="row">
+                <a class="pr-3 text-orange" href="/register">Sign Up</a>
+              
+              <a class="text-orange ml-auto" href="/reset">Forgot Password</a>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

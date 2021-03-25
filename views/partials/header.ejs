@@ -1,0 +1,157 @@
+
+<!doctype html>
+<html lang="zxx">
+
+<head>
+<meta charset="utf-8">
+<meta name="author" content="John Doe">
+<meta name="description" content="">
+<meta name="keywords" content="HTML,CSS,XML,JavaScript">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Your Jobz</title>
+
+<script src="js/4n2NXumNjtg5LPp6VXLlDicTUfA.js"></script><link rel="apple-touch-icon" href="images/apple-touch-icon.html">
+
+<link rel="shortcut icon" href="imags/logo.png" type="image/x-icon">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+
+<link href="font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="css/matrialize.css" rel="stylesheet">
+
+<link href="owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="header">
+
+    <div class="top_bar background-color-orange">
+        <div class="top_bar_container">
+        <div class="container">
+        <div class="row">
+        <div class="col">
+        <div class="top_bar_content d-flex flex-row align-items-center justify-content-start">
+        <ul class="top_bar_contact_list">
+        <li>
+        <i class="fa fa-phone coll" aria-hidden="true"></i>
+        <div class="contact-no">090 56206 707</div>
+        </li>
+        <li>
+        <i class="fa fa-envelope coll" aria-hidden="true"></i>
+        <div class="email"><a href="mailto:@ojigbo.pro@gmail.com" class="text-white">ojigbo.pro@gmail.com</a></div>
+        </li>
+        </ul>
+        <div class=" ml-auto ">
+
+        <div class="hamburger menu_mm  search_button transparent search display"><i class=" fa fa-bars font-color-white  search-icone  menu_mm "></i></div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+
+<div class="header_container background-color-orange-light">
+<div class="container">
+<div class="row">
+<div class="col">
+<div class="header_content d-flex flex-row align-items-center justify-content-start">
+<div class="logo_container">
+<a href="/">
+<img src="imags/logo.png" class="logo-text" alt="">
+</a>
+</div>
+<nav class="main_nav_contaner ml-auto">
+<ul class="main_nav">
+<li class="  ">
+<a class="" data-toggle="" href="/"><i class="fa fa-home"></i> Home
+
+</li>
+<li class=" ">
+<a class="" data-toggle="" href="/joblist"><i class="fa fa-search"></i> Job
+
+</li>
+<li><a href="/bloglist"><i class="fa fa-book"></i>  Blog </a></li>
+<!-- <li><a href="about_us.html">About</a></li> -->
+<li><a href="/contact"><i class="fa fa-address-book"></i> Contact</a></li>
+<% if(!auth) {%>
+    <li class="ml-auto"><a class="bg-white btn btn-lg btn-block text-dark" href="/login"><i class="fa fa-sign-in"></i> Login</a></li>
+    <%}else{%>
+        <li class="ml-auto"><a class="bg-white btn btn-lg btn-block text-dark" href="/dashboard"><i class="fa fa-user"></i> <%= auth.username %></a></li>
+        <li class="menu_mm "><a class="row" href="/logout"><i class="fa fa-sign-out col-4"></i>Logout</a></li>
+    <% }%>
+</ul>
+
+<div class="hamburger menu_mm menu-vertical">
+<i class="fa fa-bars font-color-white  menu_mm menu-vertical"></i>
+</div>
+</nav>
+</div>
+</div>
+</div> 
+</div>
+</div>
+
+<div class="menu d-flex flex-column align-items-end justify-content-start text-right menu_mm trans_400">
+<div class="menu_close_container">
+<div class="menu_close">
+<div></div>
+<div></div>
+</div>
+</div>
+<div class="search">
+
+<!-- <form action="#" class="header_search_form menu_mm">
+<input type="search" class="search_input menu_mm" placeholder="Search Jobs" required="required">
+<button class="header_search_button d-flex flex-column align-items-center justify-content-center menu_mm">
+<i class="fa fa-search menu_mm" aria-hidden="true"></i>
+</button>
+</form> -->
+
+</div>
+<nav class="menu_nav">
+<ul class="menu_mm">
+<li class=" menu_mm">
+<a class="row" data-toggle="" href="/"><i class="fa fa-home col-4"></i>
+<span class="">Home</span></a>
+
+</li>
+<li class=" menu_mm">
+<a class="row" data-toggle="" href="/joblist"><i class="fa fa-search col-4"></i>
+<span class="">Job</span></a>
+
+</li>
+<li class="menu_mm "><a class="row" href="/bloglist"><i class="fa fa-book col-4"></i>Blog</a></li>
+<li class="menu_mm "><a class="row" href="/contact"><i class="fa fa-address-book col-4"></i>Contact</a></li>
+<!-- <li class="menu_mm"><a href="about_us.html">About</a></li> -->
+
+<% if(!auth) {%>
+    <li class=" background-color-orange-light mt-4">
+        <a class="row  btn btn-lg btn-block text-white" href="/login">
+            <i class="fa fa-sign-in col-2 mr-auto"></i> 
+            <span class="col-11">Login</span>
+        </a>
+    </li>
+    <%}else{%>
+        <li class=" background-color-orange-light mt-4">
+            <a class="row  btn btn-lg btn-block text-white" href="/dashboard">
+                <i class="fa fa-user col-2 mr-auto"></i> 
+                <span class="col-11"><%= auth.username.slice(0,10) %></span>
+            </a>
+        
+        </li>
+        <li class="menu_mm "><a class="row" href="/logout"><i class="fa fa-sign-out col-4"></i>Logout</a></li>
+
+    <% }%>
+
+</ul>
+</nav>
+</div>
+</header>

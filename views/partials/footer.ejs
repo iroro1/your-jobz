@@ -1,0 +1,88 @@
+ 
+    <div class="modal" id="myModal">
+        <div class="container">
+        <div class="vertical-space-85"></div>
+        <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        
+        <div class="modal-body">
+        <button class="button button-rounded  close" data-dismiss="modal">&times;</button>
+        <video class="" controls>
+        <source src="video/Pexels_Videos_2706.mp4" type="video/mp4">
+        </video>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+<footer id="footer" class="background-color-white">
+    <div class="container">
+    <div class="vertical-space-100"></div>
+    <div class="row">
+    <div class="col-lg-4 col-md-6 vertical-space-2">
+    <h5>About Us</h5>
+    <p class="paregraf">After seeing the struggle to get a job in Lagos, we created this  platform to help job seekers access job postings quicker. Joined the community yet? do so now.  <a href="/register" class="btn btn-sm btn-outline-danger">Join Now</a></p> <br><br>
+    <a href="#">
+    <i class="fa fa-facebook social-icon facebook"></i></a>
+    <a href="#">
+    <i class="fa fa-twitter social-icon twitter"></i></a>
+    <a href="#">
+    <!-- <i class="fa fa-pinterest-p social-icon pinterest-p"></i></a> -->
+    <a href="#">
+    <i class="fa fa-map-marker social-icon map-marker"></i></a>
+    </div>
+    <div class="col-lg-2 col-md-6 vertical-space-2">
+    <h5>Company</h5>
+    <div class="text">
+    <!-- <a href="#">About</a> -->
+    <a href="/bloglist">Blog</a>
+    <a href="/joblist">Jobs</a>
+    <a href="#">Privacy</a>
+    </div>
+    </div>
+    <div class="col-lg-2 col-md-6 vertical-space-2">
+    <h5>Support</h5>
+    <div class="text">
+    <!-- <a href="#">About</a> -->
+    <a href="/contact">Support</a>
+    <a href="/contact">Post Issues</a>
+    <!-- <a href="#">Privacy</a> -->
+    </div>
+    </div>
+    <div class="col-lg-4 col-md-6 vertical-space-2">
+    <h5>Subscribe Us</h5>
+    <p>Get latest updates and newsletter</p>
+    <div class="vertical-space-30"></div>
+    <form id="em-market" method="POST" action="/update/user">
+    <input type="email" name="email" class="email " placeholder="Email Address " required="">
+    <span class="fa fa-envelope email-icone "></span>
+    <input type="submit" class="Subscribe" value="Subscribe">
+    <input type="hidden" name="type" value="emailList">
+    </form>
+    </div>
+    </div>
+    <div class="vertical-space-60"></div>
+    </div>
+    <div class="container-fluid background-color-orange main-footer">
+    <div class="container text-center">
+    <div class="vertical-space-30"></div>
+    <p> &copy; <span id="full-year"></span> by <a class="text_white crite" target="_blank" href="https://www.ojigbo.pro">Ojigbo.Pro</a></p>
+    </div>
+    </div>
+    </footer>
+    
+   
+    
+    <script> 
+        const year = document.getElementById("full-year")
+        year.textContent = new Date().getFullYear()
+    </script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="owlcarousel/owl.carousel.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    
+    <script src="js/custom.js"></script>
+    </body>
+    
+    </html>
