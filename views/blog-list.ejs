@@ -30,6 +30,7 @@
 
     <div class="vertical-space-25"></div>
     <div class="job-list">
+        <% if(posts.totalPagesCount>1 ){%>
         <ul class="pagination justify-content-end margin-auto">
             <% if(posts.pageNumber===1 ){%>
             <li class="page-item ">
@@ -76,6 +77,7 @@
                 </a></li>
         <%}%>
         </ul>
+        <%}%>
     </div>
     </div>
     </div>

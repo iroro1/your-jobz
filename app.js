@@ -11,11 +11,6 @@ const location = require('./utilities/location')
 const category = require('./utilities/category')
 const type = require("./utilities/typeOfJob");
 
-//
-// const home = require('../routes/home')
-
-
-
 const session = require("express-session");
 const passport = require("passport");
 
@@ -125,6 +120,7 @@ app
     let err,suc = ""
     if(req.headers.referer==='/register')
     err = "Your registration failed, Please try again."
+    // console.log(Object.entries(location.nigeria))
     res.render("register", { auth: req.user, location, err , suc});
   })
   .get("/"+process.env.REGISTERROOT, (req, res) => {
@@ -172,12 +168,13 @@ app
         const blogCount = await findAllObjects(Blog)
         const counts = {uc: userCount.length, jc:jobCount.length, bc:blogCount.length}
         console.log(counts)
-        const index = location.lagos.findIndex(loc => loc.value === found.location)
-        found.location = location.lagos[index].display
+        // const index = location['req.user.location'].findIndex(loc => loc.value === found.location)
+        // found.location = location.lagos[index].display
         console.log(found)
         res.render('dashboard',{auth: req.user , found, counts})
       } catch (error) {
         console.log(error)        
+        res.render('404', {auth:req.user, error})
       }
       
     }else{
@@ -185,11 +182,16 @@ app
     }
 })
 .get('/', async(req,res)=>{
-  const posts = await findAllObjects(Job)
-  console.log(posts)
-    const p = []
-    posts.forEach(post=>p.unshift(post))
-    res.render('home',{auth:req.user, posts: p.slice(0,10), location, category, typeOfJob: type, formatDate})
+  try {
+    
+    const posts = await findAllObjects(Job)
+    console.log(posts)
+      const p = []
+      posts.forEach(post=>p.unshift(post))
+      res.render('home',{auth:req.user, posts: p.slice(0,10), location, category, typeOfJob: type, formatDate})
+  } catch (error) {
+    res.render('404', {auth:req.user, error})
+  }
 })
 .get('/:tk', async (req,res)=>{
           console.log(req.params)
@@ -224,6 +226,11 @@ app
             try {
               const arr = req.params.tk.split('-')
               let jobs = await findAllObjects(Job)
+              
+              if(req.user){
+                jobs.filter(j=> j.location === req.user.location)
+                console.log(jobs)
+              }
               const j = []
               jobs.forEach(post=>j.unshift(post))
               let pNum = Number(arr[1]), numPerPage=10, start= Number(arr[2])
@@ -289,6 +296,7 @@ app
             posts.forEach(post=>j.unshift(post))
             let pNum = Number(arr[1]), numPerPage=15, start= Number(arr[2])
             posts = paginate(j,pNum,numPerPage,start)
+            console.log(posts)
             const endStart = (((pNum*posts.data.length)*posts.totalPagesCount) -posts.data.length )
             res.render('blog-list',{auth: req.user, posts, endStart})
             } catch (error) {
@@ -608,9 +616,21 @@ app
               res.render('404', {auth:req.user, error})
             }
           }
-          else{
-            res.redirect('/')
-          }
+          else if(req.params.tk.length === 32){
+            console.log("TOKEN")
+            console.log(req.params)
+              User.find({ token: req.params.tk }, (err, user) => {
+                if (err) console.log(err);
+                else {
+                  if (new Date().getTime() > user.expireToken) {
+                    res.redirect("/login/reset");
+                  } else {
+                    res.render("set-password", { tk: req.params.tk, auth: req.user, err:"" });
+                  }
+                }
+              });
+            }
+            else res.redirect('/')
  })
  .post("/reset", (req, res) => {
    try {
@@ -667,30 +687,35 @@ app
         })
   .post('/searchByLoc', async(req,res)=>{
     if(req.body.type==='bar'){
+      console.log(req.body)
       try {
         console.log("Loc search")
-        const jobs = await findAllObjects(Job)
+        let jobs = await findAllObjects(Job)
         const fil = []
         jobs.forEach(j=>{
             location.lagos.forEach(l=>{
               if(j.location===l.value){
-                if(l.display.includes(req.body.loc)||l.display===req.body.loc){
+                if(l.display.toLocaleLowerCase().includes(req.body.loc.toLocaleLowerCase())||l.display===req.body.loc){
                   fil.push(j)
                }
               }
           })
-          }
-          )
-          res.render('job-list',{auth: req.user, jobs: fil, typeOfJob:type, location, category})
+          })
+          const j = []
+          fil.forEach(post=>j.unshift(post))
+          let pNum = 1, numPerPage=10, start= 0
+          jobs = paginate(j,pNum,numPerPage,start)
+          const endStart = (((pNum*jobs.data.length)*jobs.totalPagesCount) -jobs.data.length )
+          res.render('job-list',{auth: req.user, jobs, typeOfJob:type, location, category, endStart})
         
       } catch (error) {
         res.render('404', {auth:req.user, error})
       }
     }
     else if(req.body.type==='top-bar'){
+      console.log('TOP')
       try {
-        console.log(req.body)
-        const jobs = await findAllObjects(Job)
+        let jobs = await findAllObjects(Job)
         let fil = []
         jobs.forEach(j=>{
           location.lagos.forEach(l=>{
@@ -707,15 +732,19 @@ app
             if(j.title.toLowerCase().includes(req.body.key.toLowerCase())){
                   fil.push(j)
               }
-  
         })
         }
         )
         const fil2 = new Set(fil)
         fil = Array.from(fil2)
-        res.render('job-list',{auth: req.user, jobs: fil, typeOfJob:type, location, category})
-        
+        const j = []
+        fil.forEach(post=>j.unshift(post))
+        let pNum = 1, numPerPage=10, start= 0
+        jobs = paginate(j,pNum,numPerPage,start)
+        const endStart = (((pNum*jobs.data.length)*jobs.totalPagesCount) -jobs.data.length )
+        res.render('job-list',{auth: req.user, jobs, typeOfJob:type, location, category,endStart})
       } catch (error) {
+        console.log(error)
         res.render('404', {auth:req.user, error})
       }
     }
@@ -920,6 +949,7 @@ app.post("/request-new-password", async(req, res) => {
     user.token = generateToken(utk);
     user.expireToken = new Date().getTime() + (100).toString();
     user.save();
+    console.log(user.token.length)
     //
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
@@ -934,7 +964,7 @@ app.post("/request-new-password", async(req, res) => {
     //
     const mailOptions = {
       html:
-        "<h4>Beautiful day to you from \"Your Jobz\". </h4><p>Please click on the link below to reset your password</p>http://localhost:9000/account/" +
+        "<h4>Beautiful day to you from \"Your Jobz\". </h4><p>Please click on the link below to reset your password</p>https://your-jobz-official.herokuapp.com/" +
         user.token + " </p>",
       to: req.body.username,
       from: process.env.EMAILACC,
@@ -944,7 +974,7 @@ app.post("/request-new-password", async(req, res) => {
       if (err) console.log(err);
       else console.log(info);
     });
-    //
+    
     const lEnd = req.body.username.slice(
       req.body.username.indexOf("@"),
       req.body.username.length
