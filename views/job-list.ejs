@@ -58,9 +58,10 @@
     <p class="title">Job Nature</p>
     <ul>
         <div class="form-group pl-2"> 
-            <li ><a href="/full-jobs" class="font-color-black">Full Time Jobs</a></li> <br>
-            <li ><a href="/part-jobs" class="font-color-black">Part Time Jobs</a></li> <br>
-            <li ><a href="/joblist" class="font-color-black">All Jobs</a></li> <br>
+            <li ><a href="/fulljobs-1-0" class="font-color-black">Full Time Jobs</a></li> <br>
+            <li ><a href="/partjobs-1-0" class="font-color-black">Part Time Jobs</a></li> <br>
+            <li ><a href="/othrjobs-1-0" class="font-color-black">Other Jobs</a></li> <br>
+            <li ><a href="/joblist-1-0" class="font-color-black">All Jobs</a></li> <br>
         </div>
     </ul>
 </form>
@@ -83,7 +84,7 @@
     </form>
     <div class="col-lg-8 col-md-12">
         <div class="detail width-100 ">
-            <% jobs.forEach(job=> {%>
+            <% jobs.data.forEach(job=> {%>
                 <div class="media display-inline text-align-center my-2">
                     <% if(job.logoUrl){ %>
                         <img src="<%=logoUrl%>" alt="John Doe" class="mr-3 ">
@@ -109,8 +110,11 @@
                          <%}%>
                      <%})%>
                 </a>
-                <p class="date-time">Deadline: <%= job.deadline.getUTCDate() %>/<%= job.deadline.getUTCMonth() %>/<%= job.deadline.getUTCFullYear() %></p>
-                </div>
+                <% if (job.deadline ){%>
+                <p class="date-time">Deadline:
+                        <%= job.deadline.getUTCDate() %>/<%= job.deadline.getUTCMonth() %>/<%= job.deadline.getUTCFullYear() %></p>
+                        <%}%>
+                    </div>
                 </div>
                 </div>
                 <hr class="mt-5">
@@ -120,14 +124,50 @@
     <div class="vertical-space-25"></div>
     <div class="job-list width-100">
     <ul class="pagination justify-content-end margin-auto">
-    <li class="page-item"><a class="page-link pdding-none" href="javascript:void(0);"><i class=" material-icons keyboard_arrow_left_right"></i></a></li>
-    <li class="page-item"><a class="page-link active" href="javascript:void(0);">1</a></li>
-    <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-    <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
-    <li class="page-item"><a class="page-link" href="javascript:void(0);">4</a></li>
-    <li class="page-item">
-    <a class="page-link pdding-none" href="javascript:void(0);"> <i class=" material-icons keyboard_arrow_left_right"></i></a>
-    </li>
+        <% if(jobs.pageNumber===1 ){%>
+        <li class="page-item ">
+            <a class="page-link d-flex  pl-2" >
+                <i class="fa fa-chevron-left"></i> 
+                <i class="fa fa-chevron-left pr-4"></i>
+            </a></li>
+        <li class="page-item"><a class="page-link " ><i class="fa fa-chevron-left"></i></a></li>
+        <%}else{%>
+            <li class="page-item ">
+                <a class="page-link d-flex  pl-2" href="/joblist-1-0">
+                    <i class="fa fa-chevron-left"></i> 
+                    <i class="fa fa-chevron-left pr-4"></i>
+                </a></li>
+            <li class="page-item"><a class="page-link " href=" /joblist-<%=jobs.pageNumber-1 %>-<%=(jobs.data.length)*(jobs.pageNumber-1)-jobs.data.length %> "><i class="fa fa-chevron-left"></i></a></li>
+        <%}%>
+    <% for(let i=jobs.pageNumber; i<=jobs.totalPagesCount; i++){%>
+        
+        <% if(i  < 3+jobs.pageNumber ){%>
+
+        <% if(jobs.pageNumber === i){%>
+            <li class="page-item"><a class="page-link active" ><%=i %></a></li>
+        <%}else {%>
+            <li class="page-item"><a class="page-link " href="/joblist-<%=i %>-<%= (jobs.data.length)*i-1
+                %>"><%=i %></a></li>
+        <%}%>
+        <%}%>
+    
+    <%}%>
+    <% if(jobs.pageNumber===jobs.totalPagesCount ){%>
+    <li class="page-item"><a class="page-link" ><i class="fa fa-chevron-right"></i></a></li>
+    <li class="page-item  ">
+        <a class="page-link d-flex pl-2" >
+            <i class="fa fa-chevron-right "></i> 
+            <i class="fa fa-chevron-right  pr-4"></i>
+        </a></li>
+
+    <%}else{%>
+        <li class="page-item"><a class="page-link" href="/joblist-<%=jobs.pageNumber+1 %>-<%= (jobs.start+jobs.data.length)+1 %>"><i class="fa fa-chevron-right"></i></a></li>
+        <li class="page-item  ">
+            <a class="page-link d-flex pl-2" href="/joblist-<%=jobs.totalPagesCount%>-<%=endStart%>">
+                <i class="fa fa-chevron-right "></i> 
+                <i class="fa fa-chevron-right  pr-4"></i>
+            </a></li>
+    <%}%>
     </ul>
     </div>
     </div>

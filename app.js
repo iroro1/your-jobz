@@ -186,9 +186,9 @@ app
 })
 .get('/', async(req,res)=>{
   const posts = await findAllObjects(Job)
-    // const p = paginate(posts,5,0 )
-    // console.log(p)
-    res.render('home',{auth:req.user, posts, location, category, typeOfJob: type, formatDate})
+    const p = []
+    posts.forEach(post=>p.unshift(post))
+    res.render('home',{auth:req.user, posts: p.slice(0,10), location, category, typeOfJob: type, formatDate})
 })
 .get('/:tk', async (req,res)=>{
           console.log(req.params)
@@ -219,19 +219,48 @@ app
           else if(req.params.tk==='contact'){
             res.render('contact',{auth: req.user})
           } 
-          else if(req.params.tk==='joblist'){ 
-            const jobs = await findAllObjects(Job)
-            res.render('job-list',{auth: req.user, jobs, typeOfJob:type, location, category})
+          else if(req.params.tk.startsWith('joblist')){ 
+            const arr = req.params.tk.split('-')
+            let jobs = await findAllObjects(Job)
+            const j = []
+            jobs.forEach(post=>j.unshift(post))
+            let pNum = Number(arr[1]), numPerPage =2, start= Number(arr[2])
+            jobs = paginate(j,pNum,numPerPage,start)
+            const endStart = (((pNum*jobs.data.length)*jobs.totalPagesCount) -jobs.data.length )
+            res.render('job-list',{auth: req.user, jobs, typeOfJob:type, location, category, endStart})
           } 
-          else if(req.params.tk==='part-jobs'){ 
-            const jobs = await findAllObjects(Job)
+          else if(req.params.tk.startsWith('partjobs')){ 
+            const arr = req.params.tk.split('-')
+            let jobs = await findAllObjects(Job)
             const part = jobs.filter(j=> j.typeOfJob === 'part')
-            res.render('job-list',{auth: req.user, jobs: part, typeOfJob:type, location, category})
+            const j = []
+            part.forEach(post=>j.unshift(post))
+            let pNum = Number(arr[1]), numPerPage =2, start= Number(arr[2])
+            jobs = paginate(j,pNum,numPerPage,start)
+            const endStart = (((pNum*jobs.data.length)*jobs.totalPagesCount) -jobs.data.length )
+            res.render('job-list',{auth: req.user, jobs, typeOfJob:type, location, category,endStart})
           } 
-          else if(req.params.tk==='full-jobs'){ 
-            const jobs = await findAllObjects(Job)
+          else if(req.params.tk.startsWith('othrjobs')){ 
+            const arr = req.params.tk.split('-')
+            let jobs = await findAllObjects(Job)
+            const part = jobs.filter(j=> j.typeOfJob === 'oth')
+            const j = []
+            part.forEach(post=>j.unshift(post))
+            let pNum = Number(arr[1]), numPerPage =2, start= Number(arr[2])
+            jobs = paginate(j,pNum,numPerPage,start)
+            const endStart = (((pNum*jobs.data.length)*jobs.totalPagesCount) -jobs.data.length )
+            res.render('job-list',{auth: req.user, jobs, typeOfJob:type, location, category,endStart})
+          } 
+          else if(req.params.tk.startsWith('fulljobs')){ 
+            const arr = req.params.tk.split('-')
+            let jobs = await findAllObjects(Job)
             const full = jobs.filter(j=> j.typeOfJob === 'full')
-            res.render('job-list',{auth: req.user, jobs: full, typeOfJob:type, location, category})
+            const j = []
+            full.forEach(post=>j.unshift(post))
+            let pNum = Number(arr[1]), numPerPage =2, start= Number(arr[2])
+            jobs = paginate(j,pNum,numPerPage,start)
+            const endStart = (((pNum*jobs.data.length)*jobs.totalPagesCount) -jobs.data.length )
+            res.render('job-list',{auth: req.user, jobs, typeOfJob:type, location, category, endStart})
           } 
           else if(req.params.tk==='bloglist'){
             const posts = await findAllObjects(Blog)
@@ -291,8 +320,16 @@ app
             await updateOneObject(User,"_id",userId,user)
             res.redirect('/dashboard')
           } 
+          else if(req.params.tk.startsWith('rem-user-adm-')){
+            console.log("Rem User Admin" ,req.params)
+            const keys = req.params.tk.slice(13)
+            const user = await findOneObject(User,"_id",keys)
+            user.isAdmin = false;
+            user.save()
+            res.redirect('/all-users')
+          } 
           else if(req.params.tk.startsWith('mak-user-adm-')){
-            console.log("Del User" ,req.params)
+            console.log("Admin User" ,req.params)
             const keys = req.params.tk.slice(13)
             const user = await findOneObject(User,"_id",keys)
             user.isAdmin = true;

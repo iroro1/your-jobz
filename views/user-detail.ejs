@@ -3,7 +3,26 @@
 
   <div class="prof">
     <div class="container">
-      <div class="row">
+      <div class="row ">
+        <% if(found.imgUrl ){ %> 
+          <span class="samp mx-auto">
+          <img src="<%= found.imgUrl %>" alt=""
+          class=" img-mem" />
+          </span>
+           <%}else{%> 
+              <% if(found.gender==="male" ){ %> 
+                <span class="samp mx-auto">
+
+                  <img src="/imags/male-pic.jpg"  alt="
+                  kkk" class=" img-mem " /> 
+                </span>
+                <%}else{%>
+                  <span class="samp mx-auto">
+                    <img src="/imags/female-pic.jpg"  alt="
+                    kkk" class=" img-mem " /> 
+                  </span>
+            <%}%>
+          <%}%>
         <div class="col-md-8 mx-auto dashboard ">
           <b class="h3 mr-auto">DASHBORD for <%= found.username %></b> <br>
           <a data-toggle="modal" data-target="#myModal2<%= auth._id%>" class="btn background-color-orange ml-auto"><i class="fa fa-cog text-white"> Make Admin</i></a>

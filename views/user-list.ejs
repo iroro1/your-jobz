@@ -17,8 +17,15 @@
               <h6 ><%= user.username %></h6>    
             </a>
             <div class="ml-auto">
-              <a data-toggle="modal" data-target="#myModal2<%= auth._id%>"  class="btn background-color-orange"><i class="fa fa-cog text-white"> Make Admin</i></a>
+
+              <% if(user.isAdmin){%>
+                <a data-toggle="modal" data-target="#modalLocAd<%= auth._id%>"  class="btn bg-danger"><i class="fa fa-lock text-white"> Lock Admin</i></a>
+              <%}else{%>
+                <a data-toggle="modal" data-target="#myModal2<%= auth._id%>"  class="btn background-color-orange"><i class="fa fa-cog text-white"> Make Admin</i></a>
+              <%}%>
+
               <a data-toggle="modal" data-target="#myModal<%= auth._id%>"  class="btn btn-danger ml-auto text-white"><i class="fa fa-trash"></i></a>
+
             </div>
         </div>
         <div class="container">
@@ -59,6 +66,40 @@
           <a
             type="button"
             href="del-user-xxx-<%= user._id %>"
+            class="btn btn-danger text-white"
+            >Yes</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+    <div
+    class="modal fade"
+    id="modalLocAd<%= auth._id%>"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header"></div>
+        <div class="modal-body p-2">
+          <div class="h6 text-left">
+            Are you sure you want to retrieve  Admin  privileges from this user?? 
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-dismiss="modal"
+          >
+            No
+          </button>
+          <a
+            type="button"
+            href="rem-user-adm-<%= user._id %>"
             class="btn btn-danger text-white"
             >Yes</a
           >

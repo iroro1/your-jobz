@@ -32,9 +32,10 @@
             <p>
                 <i class="fa fa-calendar mr-2 text-success"></i> <%=post.datePosted.toUTCString() %>
             </p>
-            <p>
-                <i class="fa fa-calendar mr-2 text-danger"></i> <%=post.deadline.toUTCString() %>
-            </p>
+            <% if (post.deadline ){%>
+              <p class="date-time">Deadline:
+                      <%= post.deadline.getUTCDate() %>/<%= post.deadline.getUTCMonth() %>/<%= post.deadline.getUTCFullYear() %></p>
+                      <%}%>
             <%  category.forEach(i=>{%>
                 <% if(i.value === post.category){ %>
                   <p>
@@ -51,7 +52,7 @@
             <p>
                 <%  typeOfJob.forEach(i=>{%>
                     <% if(i.value === post.typeOfJob){ %>
-                      <p>
+                      <p class="mb-4">
                         <i class="fa fa-user mr-2"></i> <%=i.display %>
                      </p>
                      <%}%>
@@ -59,9 +60,9 @@
             </p>
         </div>
         <% if(post.logoUrl){ %>
-            <img src="<%=logoUrl%>" alt="John Doe" class="mr-3 ">
+            <img style="width: 70px; height: 70px;" src="<%=logoUrl%>" alt="John Doe" class="mr-3 ">
             <%}else{%>
-                <img src="imags/job-post-icone-1.png" alt="John Doe" class="mr-3 ">
+                <img style="width: 70px; height: 70px;"  src="imags/job-post-icone-1.png" alt="John Doe" class="mr-3 ">
            <%}%>
     </div>
     <% if(auth && (auth.isRoot||auth.isAdmin)){ %>

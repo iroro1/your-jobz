@@ -102,8 +102,15 @@ const filterObj = (arrayToFilter,filField, filterArg) =>{
   return arrayToFilter.filter(el => el[filField] === filterArg)
 }
 
-const paginate = (list,numPerPage, startNum) =>{
-  return list.slice(startNum, startNum+numPerPage)
+const paginate = (list,pageNumber,numberPerPage,start) =>{
+  result = {}
+  const data = list.slice(start, start+numberPerPage)
+  const totalPagesCount = Math.ceil(list.length / numberPerPage)
+  result.pageNumber = pageNumber
+  result.start = start
+  result.data = data
+  result.totalPagesCount = totalPagesCount
+  return result
 }
 // DB FUNC
 const findOneObject = async(dbModel, searchField, searchArg,) =>{

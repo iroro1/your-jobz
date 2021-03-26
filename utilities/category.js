@@ -10,6 +10,7 @@ const category = [
         { value: 'leg', display: "Legal"},
         { value: 'fin', display: "Finance"},
         { value: 'brand', display: "Branding & Promotion"},
+        { value: 'acc', display: "Accounting"},
     ]
 
 
