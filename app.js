@@ -224,7 +224,7 @@ app
             let jobs = await findAllObjects(Job)
             const j = []
             jobs.forEach(post=>j.unshift(post))
-            let pNum = Number(arr[1]), nuPerPage=10, start= Number(arr[2])
+            let pNum = Number(arr[1]), numPerPage=10, start= Number(arr[2])
             jobs = paginate(j,pNum,numPerPage,start)
             const endStart = (((pNum*jobs.data.length)*jobs.totalPagesCount) -jobs.data.length )
             res.render('job-list',{auth: req.user, jobs, typeOfJob:type, location, category, endStart})
@@ -235,7 +235,7 @@ app
             const part = jobs.filter(j=> j.typeOfJob === 'part')
             const j = []
             part.forEach(post=>j.unshift(post))
-            let pNum = Number(arr[1]), nuPerPage=10, start= Number(arr[2])
+            let pNum = Number(arr[1]), numPerPage=10, start= Number(arr[2])
             jobs = paginate(j,pNum,numPerPage,start)
             const endStart = (((pNum*jobs.data.length)*jobs.totalPagesCount) -jobs.data.length )
             res.render('job-list',{auth: req.user, jobs, typeOfJob:type, location, category,endStart})
@@ -246,7 +246,7 @@ app
             const part = jobs.filter(j=> j.typeOfJob === 'oth')
             const j = []
             part.forEach(post=>j.unshift(post))
-            let pNum = Number(arr[1]), nuPerPage=10, start= Number(arr[2])
+            let pNum = Number(arr[1]), numPerPage=10, start= Number(arr[2])
             jobs = paginate(j,pNum,numPerPage,start)
             const endStart = (((pNum*jobs.data.length)*jobs.totalPagesCount) -jobs.data.length )
             res.render('job-list',{auth: req.user, jobs, typeOfJob:type, location, category,endStart})
@@ -257,7 +257,7 @@ app
             const full = jobs.filter(j=> j.typeOfJob === 'full')
             const j = []
             full.forEach(post=>j.unshift(post))
-            let pNum = Number(arr[1]), nuPerPage=10, start= Number(arr[2])
+            let pNum = Number(arr[1]), numPerPage=10, start= Number(arr[2])
             jobs = paginate(j,pNum,numPerPage,start)
             const endStart = (((pNum*jobs.data.length)*jobs.totalPagesCount) -jobs.data.length )
             res.render('job-list',{auth: req.user, jobs, typeOfJob:type, location, category, endStart})
