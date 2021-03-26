@@ -186,6 +186,7 @@ app
 })
 .get('/', async(req,res)=>{
   const posts = await findAllObjects(Job)
+  console.log(posts)
     const p = []
     posts.forEach(post=>p.unshift(post))
     res.render('home',{auth:req.user, posts: p.slice(0,10), location, category, typeOfJob: type, formatDate})
@@ -201,8 +202,8 @@ app
                 res.render("user-list",{auth:req.user, allUsers})
               } catch (error) {
                 console.log(error)
+                res.render("404",{auth:req.user})
               }
-             
             }else res.redirect('/login')
           }
           else if(req.params.tk==='update'){
@@ -212,238 +213,376 @@ app
                 res.render('update-user', {auth:req.user, found, location})
               } catch (error) {
                 console.log(error)
+                res.render('404', {auth:req.user, error})
               }
-             
             }else res.redirect('/login')
           }
           else if(req.params.tk==='contact'){
             res.render('contact',{auth: req.user})
           } 
           else if(req.params.tk.startsWith('joblist')){ 
-            const arr = req.params.tk.split('-')
-            let jobs = await findAllObjects(Job)
-            const j = []
-            jobs.forEach(post=>j.unshift(post))
-            let pNum = Number(arr[1]), numPerPage=10, start= Number(arr[2])
-            jobs = paginate(j,pNum,numPerPage,start)
-            const endStart = (((pNum*jobs.data.length)*jobs.totalPagesCount) -jobs.data.length )
-            res.render('job-list',{auth: req.user, jobs, typeOfJob:type, location, category, endStart})
+            try {
+              const arr = req.params.tk.split('-')
+              let jobs = await findAllObjects(Job)
+              const j = []
+              jobs.forEach(post=>j.unshift(post))
+              let pNum = Number(arr[1]), numPerPage=10, start= Number(arr[2])
+              jobs = paginate(j,pNum,numPerPage,start)
+              const endStart = (((pNum*jobs.data.length)*jobs.totalPagesCount) -jobs.data.length )
+              res.render('job-list',{auth: req.user, jobs, typeOfJob:type, location, category, endStart})
+            } catch (error) {
+              res.render('404', {auth:req.user, error})
+            }
           } 
           else if(req.params.tk.startsWith('partjobs')){ 
-            const arr = req.params.tk.split('-')
-            let jobs = await findAllObjects(Job)
-            const part = jobs.filter(j=> j.typeOfJob === 'part')
-            const j = []
-            part.forEach(post=>j.unshift(post))
-            let pNum = Number(arr[1]), numPerPage=10, start= Number(arr[2])
-            jobs = paginate(j,pNum,numPerPage,start)
-            const endStart = (((pNum*jobs.data.length)*jobs.totalPagesCount) -jobs.data.length )
-            res.render('job-list',{auth: req.user, jobs, typeOfJob:type, location, category,endStart})
+            try {
+              const arr = req.params.tk.split('-')
+              let jobs = await findAllObjects(Job)
+              const part = jobs.filter(j=> j.typeOfJob === 'part')
+              const j = []
+              part.forEach(post=>j.unshift(post))
+              let pNum = Number(arr[1]), numPerPage=10, start= Number(arr[2])
+              jobs = paginate(j,pNum,numPerPage,start)
+              const endStart = (((pNum*jobs.data.length)*jobs.totalPagesCount) -jobs.data.length )
+              res.render('job-list',{auth: req.user, jobs, typeOfJob:type, location, category,endStart})              
+            } catch (error) {
+              res.render('404', {auth:req.user, error})
+            }
           } 
-          else if(req.params.tk.startsWith('othrjobs')){ 
-            const arr = req.params.tk.split('-')
-            let jobs = await findAllObjects(Job)
-            const part = jobs.filter(j=> j.typeOfJob === 'oth')
-            const j = []
-            part.forEach(post=>j.unshift(post))
-            let pNum = Number(arr[1]), numPerPage=10, start= Number(arr[2])
-            jobs = paginate(j,pNum,numPerPage,start)
-            const endStart = (((pNum*jobs.data.length)*jobs.totalPagesCount) -jobs.data.length )
-            res.render('job-list',{auth: req.user, jobs, typeOfJob:type, location, category,endStart})
+          else if(req.params.tk.startsWith('othrjobs')){
+            try {
+              const arr = req.params.tk.split('-')
+              let jobs = await findAllObjects(Job)
+              const part = jobs.filter(j=> j.typeOfJob === 'oth')
+              const j = []
+              part.forEach(post=>j.unshift(post))
+              let pNum = Number(arr[1]), numPerPage=10, start= Number(arr[2])
+              jobs = paginate(j,pNum,numPerPage,start)
+              const endStart = (((pNum*jobs.data.length)*jobs.totalPagesCount) -jobs.data.length )
+              res.render('job-list',{auth: req.user, jobs, typeOfJob:type, location, category,endStart})
+              
+            } catch (error) {
+              res.render('404', {auth:req.user, error})
+            } 
           } 
           else if(req.params.tk.startsWith('fulljobs')){ 
-            const arr = req.params.tk.split('-')
-            let jobs = await findAllObjects(Job)
-            const full = jobs.filter(j=> j.typeOfJob === 'full')
-            const j = []
-            full.forEach(post=>j.unshift(post))
-            let pNum = Number(arr[1]), numPerPage=10, start= Number(arr[2])
-            jobs = paginate(j,pNum,numPerPage,start)
-            const endStart = (((pNum*jobs.data.length)*jobs.totalPagesCount) -jobs.data.length )
-            res.render('job-list',{auth: req.user, jobs, typeOfJob:type, location, category, endStart})
+            try {
+              const arr = req.params.tk.split('-')
+              let jobs = await findAllObjects(Job)
+              const full = jobs.filter(j=> j.typeOfJob === 'full')
+              const j = []
+              full.forEach(post=>j.unshift(post))
+              let pNum = Number(arr[1]), numPerPage=10, start= Number(arr[2])
+              jobs = paginate(j,pNum,numPerPage,start)
+              const endStart = (((pNum*jobs.data.length)*jobs.totalPagesCount) -jobs.data.length )
+              res.render('job-list',{auth: req.user, jobs, typeOfJob:type, location, category, endStart})
+              
+            } catch (error) {
+              res.render('404', {auth:req.user, error})
+            }
           } 
-          else if(req.params.tk==='bloglist'){
-            const posts = await findAllObjects(Blog)
-            res.render('blog-list',{auth: req.user, posts})
+          else if(req.params.tk.startsWith('bloglist-')){
+            const arr = req.params.tk.split('-')
+            try {
+            let posts = await findAllObjects(Blog)
+            const j = []
+            posts.forEach(post=>j.unshift(post))
+            let pNum = Number(arr[1]), numPerPage=15, start= Number(arr[2])
+            posts = paginate(j,pNum,numPerPage,start)
+            const endStart = (((pNum*posts.data.length)*posts.totalPagesCount) -posts.data.length )
+            res.render('blog-list',{auth: req.user, posts, endStart})
+            } catch (error) {
+              res.render('404',{auth: req.user})
+            }
+            
           } 
           else if(req.params.tk.startsWith('all-cat-')){
-            const id = req.params.tk.slice(8)
-            const jobs = await findAllObjects(Job)
-            const filtered = filterObj(jobs,'category',id)
-            res.render('job-list',{auth: req.user, jobs: filtered, typeOfJob:type, location, category})
+            try {
+              const id = req.params.tk.split("-")
+              const jobs = await findAllObjects(Job)
+              let filtered = filterObj(jobs,'category',id[2])
+              const j = []
+              filtered.forEach(post=>j.unshift(post))
+              let pNum = Number(id[3]), numPerPage=10, start= Number(id[4])
+              filtered = paginate(j,pNum,numPerPage,start)
+              const endStart = (((pNum*filtered.data.length)*filtered.totalPagesCount) -filtered.data.length )
+              res.render('job-list',{auth: req.user, jobs: filtered, typeOfJob:type, location, category, endStart})
+              
+            } catch (error) {
+              res.render('404', {auth:req.user, error})
+            }
           } 
           else if(req.params.tk.startsWith('emails')){
-            
-            const emails = await findAllObjects(Contact)
-            const unread = emails.filter(em=> em.read === false)
-            const emailList = await findAllObjects(EmailList)
-            res.render('emails',{auth: req.user, emails,emailList, unread})
+            try {
+              const emails = await findAllObjects(Contact)
+              const unread = emails.filter(em=> em.read === false)
+              const emailList = await findAllObjects(EmailList)
+              res.render('emails',{auth: req.user, emails,emailList, unread})
+              
+            } catch (error) {
+              res.render('404', {auth:req.user, error})
+            }
           } 
           else if(req.params.tk.startsWith('mailUn')){
-            const mail = await findAllObjects(Contact)
-            const emails = mail.filter(em=> em.read === false)
-            const emailList = await findAllObjects(EmailList)
-            res.render('emails',{auth: req.user, emails, emailList, unread:[]})
+            try {
+              const mail = await findAllObjects(Contact)
+              const emails = mail.filter(em=> em.read === false)
+              const emailList = await findAllObjects(EmailList)
+              res.render('emails',{auth: req.user, emails, emailList, unread:[]})
+              
+            } catch (error) {
+              res.render('404', {auth:req.user, error})
+            }
           } 
           else if(req.params.tk.startsWith('blog')){
-            const id = req.params.tk.slice(5)
-            console.log(id)
-            let post = await findOneObject(Blog, "_id", id)
-            const content2 = post.content.split("\n");
-            post = { ...post._doc, content: content2 };
-            console.log(post.content)
-            res.render('blog-detail',{auth: req.user, post})
+            try {
+              const id = req.params.tk.slice(5)
+              console.log(id)
+              let post = await findOneObject(Blog, "_id", id)
+              const content2 = post.content.split("\n");
+              post = { ...post._doc, content: content2 };
+              console.log(post.content)
+              res.render('blog-detail',{auth: req.user, post})
+              
+            } catch (error) {
+              res.render('404', {auth:req.user, error})
+            }
           } 
           else if(req.params.tk.startsWith('del-work-exp-')){
-            console.log("Del Work Exp")
-            const keys = req.params.tk.slice(13)
-            const userId = keys.split("-")[0]
-            const workId = keys.split("-")[1]
-            const user = await findOneObject(User, "_id", userId)
-            const nuUser =  await user.work_experience.filter(ex=> Number(ex.id) !== Number(workId)
-            )
-            user.work_experience = nuUser
-            console.log(nuUser)
-
-            await updateOneObject(User,"_id",userId,user)
-            res.redirect('/dashboard')
+            try {
+              console.log("Del Work Exp")
+              const keys = req.params.tk.slice(13)
+              const userId = keys.split("-")[0]
+              const workId = keys.split("-")[1]
+              const user = await findOneObject(User, "_id", userId)
+              const nuUser =  await user.work_experience.filter(ex=> Number(ex.id) !== Number(workId)
+              )
+              user.work_experience = nuUser
+              console.log(nuUser)
+  
+              await updateOneObject(User,"_id",userId,user)
+              res.redirect('/dashboard')
+              
+            } catch (error) {
+              res.render('404', {auth:req.user, error})
+            }
           } 
           else if(req.params.tk.startsWith('del-educ-exp-')){
-            console.log("Del Education")
-            const keys = req.params.tk.slice(13)
-            const userId = keys.split("-")[0]
-            const workId = keys.split("-")[1]
-            const user = await findOneObject(User, "_id", userId)
-            const nuUser =  await user.education.filter(ex=> Number(ex.id) !== Number(workId)
-            )
-            user.education = nuUser
-            await updateOneObject(User,"_id",userId,user)
-            res.redirect('/dashboard')
+            try {
+              
+              console.log("Del Education")
+              const keys = req.params.tk.slice(13)
+              const userId = keys.split("-")[0]
+              const workId = keys.split("-")[1]
+              const user = await findOneObject(User, "_id", userId)
+              const nuUser =  await user.education.filter(ex=> Number(ex.id) !== Number(workId)
+              )
+              user.education = nuUser
+              await updateOneObject(User,"_id",userId,user)
+              res.redirect('/dashboard')
+            } catch (error) {
+              res.render('404', {auth:req.user, error})
+            }
           } 
           else if(req.params.tk.startsWith('rem-user-adm-')){
-            console.log("Rem User Admin" ,req.params)
-            const keys = req.params.tk.slice(13)
-            const user = await findOneObject(User,"_id",keys)
-            user.isAdmin = false;
-            user.save()
-            res.redirect('/all-users')
+            try {
+              console.log("Rem User Admin" ,req.params)
+              const keys = req.params.tk.slice(13)
+              const user = await findOneObject(User,"_id",keys)
+              user.isAdmin = false;
+              user.save()
+              res.redirect('/all-users')
+              
+            } catch (error) {
+              res.render('404', {auth:req.user, error})
+            }
           } 
           else if(req.params.tk.startsWith('mak-user-adm-')){
-            console.log("Admin User" ,req.params)
-            const keys = req.params.tk.slice(13)
-            const user = await findOneObject(User,"_id",keys)
-            user.isAdmin = true;
-            user.save()
-            res.redirect('/all-users')
+            try {
+              console.log("Admin User" ,req.params)
+              const keys = req.params.tk.slice(13)
+              const user = await findOneObject(User,"_id",keys)
+              user.isAdmin = true;
+              user.save()
+              res.redirect('/all-users')
+              
+            } catch (error) {
+              res.render('404', {auth:req.user, error})
+            }
           } 
           else if(req.params.tk.startsWith('del-jobb-pos-')){
-            console.log("Job Del")
-            const keys = req.params.tk.slice(13)
-            Job.findOneAndDelete({"_id" : keys}, (err)=>{
-              if(err)console.log(err)
-              else{
-                console.log("success")
-                res.redirect('/joblist')
-              }
-            })
+            try {
+              console.log("Job Del")
+              const keys = req.params.tk.slice(13)
+              Job.findOneAndDelete({"_id" : keys}, (err)=>{
+                if(err)console.log(err)
+                else{
+                  console.log("success")
+                  res.redirect('/joblist')
+                }
+              })
+              
+            } catch (error) {
+              res.render('404', {auth:req.user, error})
+            }
           }
           else if(req.params.tk.startsWith('del-blog-pos-')){
-            console.log("Edit Blog" ,req.params)
-            const keys = req.params.tk.slice(13)
-            console.log(keys)
-            Blog.findOneAndDelete({"_id" : keys}, (err)=>{
-              if(err)console.log(err)
-              else{
-                console.log("success")
-                res.redirect('/bloglist')
-              }
-            })
+            try {
+              console.log("Edit Blog" ,req.params)
+              const keys = req.params.tk.slice(13)
+              console.log(keys)
+              Blog.findOneAndDelete({"_id" : keys}, (err)=>{
+                if(err)console.log(err)
+                else{
+                  console.log("success")
+                  res.redirect('/bloglist')
+                }
+              })
+              
+            } catch (error) {
+              res.render('404', {auth:req.user, error})
+            }
           }
           else if(req.params.tk.startsWith('edi-tjob-pos-')){
-            if(req.user){
-            console.log("Edit Job" ,req.params)
-            const keys = req.params.tk.slice(13)
-            console.log(keys)
-            const post = await findOneObject(Job,"_id", keys)  
-            res.render("user-ed-exp", {auth:req.user, post, type: "edit-job", location, typeOfJob:type, category})
-            } else res.redirect('/')
+            try {
+              if(req.user){
+              console.log("Edit Job" ,req.params)
+              const keys = req.params.tk.slice(13)
+              console.log(keys)
+              const post = await findOneObject(Job,"_id", keys)  
+              res.render("user-ed-exp", {auth:req.user, post, type: "edit-job", location, typeOfJob:type, category})
+              } else res.redirect('/')
+              
+            } catch (error) {
+              res.render('404', {auth:req.user, error})
+            }
 
           }
           else if(req.params.tk.startsWith('edi-blog-pos-')){
-            if(req.user){
-            console.log("Edit Blog" ,req.params)
-            const keys = req.params.tk.slice(13)
-            console.log(keys)
-            const blog = await findOneObject(Blog,"_id", keys)  
-            if(blog.author.username === req.user.username || req.user.isAdmin || req.user.isRoot){
-              res.render("user-ed-exp", {auth:req.user, blog, type: "edit-post"})
-              } else res.redirect('/login')
-            } else res.redirect('/')
+            try {
+              if(req.user){
+              console.log("Edit Blog" ,req.params)
+              const keys = req.params.tk.slice(13)
+              console.log(keys)
+              const blog = await findOneObject(Blog,"_id", keys)  
+              if(blog.author.username === req.user.username || req.user.isAdmin || req.user.isRoot){
+                res.render("user-ed-exp", {auth:req.user, blog, type: "edit-post"})
+                } else res.redirect('/login')
+              } else res.redirect('/')
+              
+            } catch (error) {
+              res.render('404', {auth:req.user, error})
+            }
 
           }
           else if(req.params.tk.startsWith('del-user-xxx-')){
-            console.log("Del User" ,req.params)
-            const keys = req.params.tk.slice(13)
-            console.log(keys)
-            const id = mongoose.Types.ObjectId(keys)
-            const response = await deleteOneObject(User,"_id",id)
-            console.log(response)
-            res.redirect('/all-users')
+            try {
+              console.log("Del User" ,req.params)
+              const keys = req.params.tk.slice(13)
+              console.log(keys)
+              const id = mongoose.Types.ObjectId(keys)
+              const response = await deleteOneObject(User,"_id",id)
+              console.log(response)
+              res.redirect('/all-users')
+              
+            } catch (error) {
+              res.render('404', {auth:req.user, error})
+            }
           } 
           else if(req.params.tk.startsWith('user-details-')){
-            console.log("User-Details")
-            const id = req.params.tk.slice(13)
-            const user = await findOneObject(User, "_id", id)
-            res.render('user-detail',{auth: req.user,found: user, category, location})
+            try {
+              console.log("User-Details")
+              const id = req.params.tk.slice(13)
+              const user = await findOneObject(User, "_id", id)
+              res.render('user-detail',{auth: req.user,found: user, category, location})
+              
+            } catch (error) {
+              res.render('404', {auth:req.user, error})
+            }
           } 
           else if(req.params.tk.startsWith('job-detail-')){
-            const id = req.params.tk.slice(11)
-            console.log(id)
-            let post = await findOneObject(Job, "_id", id)
-            const content2 = post.content.split("\n");
-            post = { ...post._doc, content: content2 };
-            res.render('job-detail',{auth: req.user,post, type:"job-detail", category, location, typeOfJob: type})
+            try {
+              const id = req.params.tk.slice(11)
+              console.log(id)
+              let post = await findOneObject(Job, "_id", id)
+              const content2 = post.content.split("\n");
+              post = { ...post._doc, content: content2 };
+              res.render('job-detail',{auth: req.user,post, type:"job-detail", category, location, typeOfJob: type})
+              
+            } catch (error) {
+              res.render('404', {auth:req.user, error})
+            }
           } 
           else if(req.params.tk.startsWith('add-Job')){
-            res.render('user-ed-exp',{auth: req.user, type:"add-job", category, location, typeOfJob: type})
+            try {
+              res.render('user-ed-exp',{auth: req.user, type:"add-job", category, location, typeOfJob: type})
+              
+            } catch (error) {
+              res.render('404', {auth:req.user, error})
+            }
           } 
           else if(req.params.tk.startsWith('mail')){
-            const id = req.params.tk.slice(5)
-            console.log(id)
-            const mail = await findOneObject(Contact, "_id", id)
-            mail.read = true
-            await updateOneObject(Contact,"_id",id,mail)
-
-            res.render('mail-detail',{auth: req.user, mail})
+            try {
+              const id = req.params.tk.slice(5)
+              console.log(id)
+              const mail = await findOneObject(Contact, "_id", id)
+              mail.read = true
+              await updateOneObject(Contact,"_id",id,mail)
+  
+              res.render('mail-detail',{auth: req.user, mail})
+              
+            } catch (error) {
+              res.render('404', {auth:req.user, error})
+            }
           } 
           else if(req.params.tk==='add-post'){
-            res.render('user-ed-exp',{auth: req.user, type:"add-post"})
+            try {
+              res.render('user-ed-exp',{auth: req.user, type:"add-post"})
+              
+            } catch (error) {
+              res.render('404', {auth:req.user, error})
+            }
           } 
           else if(req.params.tk==='reset'){
-            const err = errorReport(req.headers.referer,'/', 'reset', 'Please enter the email registered to the account.')
-            res.render("password-reset", { auth: req.user, err });
+            try {
+              const err = errorReport(req.headers.referer,'/', 'reset', 'Please enter the email registered to the account.')
+              res.render("password-reset", { auth: req.user, err });
+              
+            } catch (error) {
+              res.render('404', {auth:req.user, error})
+            }
           } 
           else if(req.params.tk==='add-experience'){
-            if(req.user){
-              try {
-                const found = await findOneObject(User,"username",req.user.username)
-                res.render('user-ed-exp', {auth:req.user, found, type:"add-experience"})
-              } catch (error) {
-                console.log(error)
-              }
-             
-            }else res.redirect('/login')
+            try {
+              if(req.user){
+                try {
+                  const found = await findOneObject(User,"username",req.user.username)
+                  res.render('user-ed-exp', {auth:req.user, found, type:"add-experience"})
+                } catch (error) {
+                  console.log(error)
+                }
+               
+              }else res.redirect('/login')
+              
+            } catch (error) {
+              res.render('404', {auth:req.user, error})
+            }
           } 
           else if(req.params.tk==='add-education'){
-            if(req.user){
-              try {
-                const found = await findOneObject(User,"username",req.user.username)
-                res.render('user-ed-exp', {auth:req.user, found, type:"add-education"})
-              } catch (error) {
-                console.log(error)
-              }
-            
-            }else res.redirect('/login')
+            try {
+              if(req.user){
+                try {
+                  const found = await findOneObject(User,"username",req.user.username)
+                  res.render('user-ed-exp', {auth:req.user, found, type:"add-education"})
+                } catch (error) {
+                  console.log(error)
+                }
+              
+              }else res.redirect('/login')
+              
+            } catch (error) {
+              res.render('404', {auth:req.user, error})
+            }
           }
           else if(req.params.tk.split('@').length>1){
             console.log("EMAIL")
@@ -466,7 +605,7 @@ app
                 }
             } catch (error) {
               console.log(error)
-              res.redirect('/login')
+              res.render('404', {auth:req.user, error})
             }
           }
           else{
@@ -474,97 +613,111 @@ app
           }
  })
  .post("/reset", (req, res) => {
-          if (req.body.password[0] === req.body.password[1]) {
-            console.log("Matching passwords", req.params);
-            if(req.user){
-              // For logged in users to change password
-              User.findOne({ username: req.user.username }, (err, user) => {
-                if (err) console.log(err);
-                else {
-                  console.log(user);
-                  user.setPassword(req.body.password[0], (err, user) => {
-                    if (err) console.log(err);
-                    else {
-                      user.expireToken = undefined;
-                      user.token = undefined;
-                      user.save((err) => {
-                        if (err) console.log(err);
-                        else res.redirect("/login");
-                      });
-                    }
-                  });
-                }
-              });
-            }else{
-               // For users changing password from email link
-              User.findOne({ token: req.body.tk }, (err, user) => {
-                if (err) console.log(err);
-                else {
-                  console.log(user);
-                  user.setPassword(req.body.password[0], (err, user) => {
-                    if (err) console.log(err);
-                    else {
-                      user.expireToken = undefined;
-                      user.token = undefined;
-        
-                      user.save((err) => {
-                        if (err) console.log(err);
-                        else res.redirect("/login");
-                      });
-                    }
-                  });
-                }
-              });
-            }
-          
-          } else {
-            console.log("Passwords don't match");
-            res.redirect("/"+req.user.username);
-          }
+   try {
+     if (req.body.password[0] === req.body.password[1]) {
+       console.log("Matching passwords", req.params);
+       if(req.user){
+         // For logged in users to change password
+         User.findOne({ username: req.user.username }, (err, user) => {
+           if (err) console.log(err);
+           else {
+             console.log(user);
+             user.setPassword(req.body.password[0], (err, user) => {
+               if (err) console.log(err);
+               else {
+                 user.expireToken = undefined;
+                 user.token = undefined;
+                 user.save((err) => {
+                   if (err) console.log(err);
+                   else res.redirect("/login");
+                 });
+               }
+             });
+           }
+         });
+       }else{
+          // For users changing password from email link
+         User.findOne({ token: req.body.tk }, (err, user) => {
+           if (err) console.log(err);
+           else {
+             console.log(user);
+             user.setPassword(req.body.password[0], (err, user) => {
+               if (err) console.log(err);
+               else {
+                 user.expireToken = undefined;
+                 user.token = undefined;
+   
+                 user.save((err) => {
+                   if (err) console.log(err);
+                   else res.redirect("/login");
+                 });
+               }
+             });
+           }
+         });
+       }
+     
+     } else {
+       console.log("Passwords don't match");
+       res.redirect("/"+req.user.username);
+     }
+   } catch (error) {
+    res.render('404', {auth:req.user, error})
+   }
         })
   .post('/searchByLoc', async(req,res)=>{
     if(req.body.type==='bar'){
-      console.log("Loc search")
-      const jobs = await findAllObjects(Job)
-      const fil = []
-      jobs.forEach(j=>{
+      try {
+        console.log("Loc search")
+        const jobs = await findAllObjects(Job)
+        const fil = []
+        jobs.forEach(j=>{
+            location.lagos.forEach(l=>{
+              if(j.location===l.value){
+                if(l.display.includes(req.body.loc)||l.display===req.body.loc){
+                  fil.push(j)
+               }
+              }
+          })
+          }
+          )
+          res.render('job-list',{auth: req.user, jobs: fil, typeOfJob:type, location, category})
+        
+      } catch (error) {
+        res.render('404', {auth:req.user, error})
+      }
+    }
+    else if(req.body.type==='top-bar'){
+      try {
+        console.log(req.body)
+        const jobs = await findAllObjects(Job)
+        let fil = []
+        jobs.forEach(j=>{
           location.lagos.forEach(l=>{
             if(j.location===l.value){
               if(l.display.includes(req.body.loc)||l.display===req.body.loc){
                 fil.push(j)
-             }
+              }
             }
+            category.forEach(l=>{
+              if(j.category===req.body.cat){
+                fil.push(j)
+              }
+            })
+            if(j.title.toLowerCase().includes(req.body.key.toLowerCase())){
+                  fil.push(j)
+              }
+  
         })
         }
         )
+        const fil2 = new Set(fil)
+        fil = Array.from(fil2)
         res.render('job-list',{auth: req.user, jobs: fil, typeOfJob:type, location, category})
-    }
-    else if(req.body.type==='top-bar'){
-      console.log(req.body)
-      const jobs = await findAllObjects(Job)
-      let fil = []
-      jobs.forEach(j=>{
-        location.lagos.forEach(l=>{
-          if(j.location===l.value){
-            if(l.display.includes(req.body.loc)||l.display===req.body.loc){
-              fil.push(j)
-            }
-          }
-          category.forEach(l=>{
-            if(j.category===req.body.cat){
-              fil.push(j)
-            }
-          })
-          if(j.title.toLowerCase().includes(req.body.key.toLowerCase())){
-                fil.push(j)
-            }
-
-      })
+        
+      } catch (error) {
+        res.render('404', {auth:req.user, error})
       }
-      )
-      const fil2 = new Set(fil)
-      fil = Array.from(fil2)
-      res.render('job-list',{auth: req.user, jobs: fil, typeOfJob:type, location, category})
     }
  })
 
@@ -583,7 +736,7 @@ app
         res.redirect("/dashboard")
       } catch (error) {
         console.log(error)
-        res.redirect('/dashboard')
+        res.render('404', {auth:req.user, error})
       }
     }
     else if(req.body.type==="add-experience"){
@@ -599,7 +752,7 @@ app
         res.redirect("/dashboard")
       } catch (error) {
         console.log(error)
-        res.redirect('/dashboard')
+        res.render('404', {auth:req.user, error})
       }
     }
     else if(req.body.type==="emailList"){
@@ -619,7 +772,7 @@ app
         }
       } catch (error) {
         console.log(error)
-        res.redirect('/dashboard')
+        res.render('404', {auth:req.user, error})
       }
     }
     else if(req.body.type==="edit-job"){
@@ -631,7 +784,7 @@ app
         res.redirect("/job-detail-"+post._id)
       } catch (error) {
         console.log(error)
-        res.redirect('/dashboard')
+        res.render('404', {auth:req.user, error})
       }
     }
     else if(req.body.type==="add-job"){
@@ -658,7 +811,7 @@ app
         res.redirect("/dashboard")
       } catch (error) {
         console.log(error)
-        res.redirect('/dashboard')
+        res.render('404', {auth:req.user, error})
       }
     }
     else if(req.body.type==="edit-post"){
@@ -670,7 +823,7 @@ app
         res.redirect("/blog-"+blog._id)
       } catch (error) {
         console.log(error)
-        res.redirect('/dashboard')
+        res.render('404', {auth:req.user, error})
       }
     }
     else if(req.body.type==="add-post"){
@@ -682,7 +835,7 @@ app
         res.redirect("/bloglist")
       } catch (error) {
         console.log(error)
-        res.redirect('/dashboard')
+        res.render('404', {auth:req.user, error})
       }
     }
     else if(req.body.type==="add-comment"){
@@ -704,31 +857,36 @@ app
         res.redirect('bloglist')
       } catch (error) {
         console.log(error)
-        res.redirect('/dashboard')
+        res.render('404', {auth:req.user, error})
       }
     }
     else{
-      const user = await findOneObject(User,"username",req.user.username)
-      user.username= req.body.username?req.body.username: user.username;
-      user.alias=req.body.alias?req.body.alias: user.alias;
-      user.phone= req.body.phone? req.body.phone: user.phone;
-      user. gender= req.body.gender? req.body.gender: user.gender;
-      user.highest_level_education= req.body.education? req.body.education: user.highest_level_education;
-      user.location= req.body.location? req.body.location: user.location;
-      user.imgUrl= req.body.imgUrl? req.body.imgUrl: user.imgUrl;
-    
-    User.updateOne(
-      { _id: user._id },
-      {
-        $set: user,
-      },
-      (err, doc) => {
-        if (err) console.log(err);
-        else {
-          res.redirect("/dashboard");
+      try {
+        const user = await findOneObject(User,"username",req.user.username)
+        user.username= req.body.username?req.body.username: user.username;
+        user.alias=req.body.alias?req.body.alias: user.alias;
+        user.phone= req.body.phone? req.body.phone: user.phone;
+        user. gender= req.body.gender? req.body.gender: user.gender;
+        user.highest_level_education= req.body.education? req.body.education: user.highest_level_education;
+        user.location= req.body.location? req.body.location: user.location;
+        user.imgUrl= req.body.imgUrl? req.body.imgUrl: user.imgUrl;
+      
+      User.updateOne(
+        { _id: user._id },
+        {
+          $set: user,
+        },
+        (err, doc) => {
+          if (err) console.log(err);
+          else {
+            res.redirect("/dashboard");
+          }
         }
+      );
+        
+      } catch (error) {
+        res.render('404', {auth:req.user, error})
       }
-    );
   }
   }else res.redirect('/login')
 })
@@ -749,7 +907,7 @@ app
       res.redirect("/")
     } catch (error) {
       console.log(error)
-      res.redirect('/dashboard')
+      res.render('404', {auth:req.user, error})
     }
 })
 //
@@ -797,6 +955,7 @@ app.post("/request-new-password", async(req, res) => {
   }
    catch (error) {
     console.log(error)
+    res.render('404', {auth:req.user, error})
   }
 
 })

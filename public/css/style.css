@@ -3063,7 +3063,13 @@ html .ui-button.ui-state-disabled:active {
     height: 90px;
 }
 #footer .background-color-orange {
-    background-color: orangered);
+    background-color: orangered;
+}
+#not-found{
+    min-height: 50rem;
+}
+#not-found h1{
+    color:  orangered;
 }
 #footer .main-footer p {
     font-size: 14px;
