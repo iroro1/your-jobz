@@ -84,6 +84,7 @@
     </form>
     <div class="col-lg-8 col-md-12">
         <div class="detail width-100 ">
+            <% if(jobs.data.length !== 0){%>
             <% jobs.data.forEach(job=> {%>
                 <div class="media display-inline text-align-center my-2">
                     <% if(job.logoUrl){ %>
@@ -119,6 +120,9 @@
                 </div>
                 <hr class="mt-5">
                 <%})%>
+            <%} else{%>
+                <h5>You have no jobs!!</h5>
+            <%}%>
         </div>
     <div class="vertical-space-20"></div>
     <div class="vertical-space-25"></div>

@@ -53,40 +53,44 @@
 </p>
 <div class="vertical-space-60"></div>
 <div class="detail">
+<% if(posts.length !== 0){%>
     <% posts && posts.forEach(job=> {%>
-<hr class="mt-5">
-<div class="media display-inline text-align-center">
-    <% if(job.logoUrl){ %>
-        <img src="<%=logoUrl%>" alt="John Doe" class="mr-3 ">
-        <%}else{%>
-            <img src="imags/job-post-icone-1.png" alt="John Doe" class="mr-3 ">
-       <%}%>
-<div class="media-body text-left  text-align-center">
-<h6> <a href="job-detail-<%= job._id %>" class="font-color-black"><%= job.company%> is looking for a <%= job.title %></a></h6>
-<%  location.lagos.forEach(i=>{%>
-    <% if(i.value === job.location){ %>
-        <i class="fa fa-map mr-2"></i>  <%=i.display.toUpperCase() %>
-     <%}%>
- <%})%> <br>   
-<span class="text "><i class="fa fa-calendar"></i> <%= job.yearsOfExp %> year(s) experience</span>
-<br />
-<span class="text font-size"> <i class="fa fa-money"></i> <%= job.salary %> monthly</span>
-<div class="float-right margin-top text-align-center">
-<a href="#" class="part-full-time">
-    <%  typeOfJob.forEach(i=>{%>
-        <% if(i.value === job.typeOfJob){ %>
-          <%= i.display %> 
-         <%}%>
-     <%})%>
-</a>
-<% if(job.deadline){%>
+        <hr class="mt-5">
+        <div class="media display-inline text-align-center">
+            <% if(job.logoUrl){ %>
+                <img src="<%=logoUrl%>" alt="John Doe" class="mr-3 ">
+                <%}else{%>
+                    <img src="imags/job-post-icone-1.png" alt="John Doe" class="mr-3 ">
+            <%}%>
+        <div class="media-body text-left  text-align-center">
+        <h6> <a href="job-detail-<%= job._id %>" class="font-color-black"><%= job.company%> is looking for a <%= job.title %></a></h6>
+        <%  location.lagos.forEach(i=>{%>
+            <% if(i.value === job.location){ %>
+                <i class="fa fa-map mr-2"></i>  <%=i.display.toUpperCase() %>
+            <%}%>
+        <%})%> <br>   
+        <span class="text "><i class="fa fa-calendar"></i> <%= job.yearsOfExp %> year(s) experience</span>
+        <br />
+        <span class="text font-size"> <i class="fa fa-money"></i> <%= job.salary %> monthly</span>
+        <div class="float-right margin-top text-align-center">
+        <a href="#" class="part-full-time">
+            <%  typeOfJob.forEach(i=>{%>
+                <% if(i.value === job.typeOfJob){ %>
+                <%= i.display %> 
+                <%}%>
+            <%})%>
+        </a>
+        <% if(job.deadline){%>
 
-    <p class="date-time">Deadline: <%= job.deadline.getUTCDate() %>/<%= job.deadline.getUTCMonth() %>/<%= job.deadline.getUTCFullYear() %></p>
-    <%}%>
-</div>
-</div>
-</div>
-<%})%>
+            <p class="date-time">Deadline: <%= job.deadline.getUTCDate() %>/<%= job.deadline.getUTCMonth() %>/<%= job.deadline.getUTCFullYear() %></p>
+            <%}%>
+        </div>
+        </div>
+        </div>
+        <%})%>
+<%} else{%>
+    <h5>You have no jobs!!</h5>
+<%}%>
 </div>
 <div class="vertical-space-20"></div>
 <div class="vertical-space-25"></div>
