@@ -171,7 +171,7 @@ app
         // const index = location['req.user.location'].findIndex(loc => loc.value === found.location)
         // found.location = location.lagos[index].display
         console.log(found)
-        res.render('dashboard',{auth: req.user , found, counts})
+        res.render('dashboard',{auth: req.user , found, counts,location})
       } catch (error) {
         console.log(error)        
         res.render('404', {auth:req.user, error})
