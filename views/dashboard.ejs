@@ -153,7 +153,14 @@
               </tr>
               <tr>
                 <td>Location</td>
-                <td><%= found.location.charAt(0).toUpperCase()+found.location.slice(1) %></td>
+                <%  location.lagos.forEach(i=>{%>
+                  <% if(i.value === post.location){ %>
+                    <p>
+                      <td><%= post.location.charAt(0).toUpperCase()+found.location.slice(1) %></td>
+                   </p>
+                   <%}%>
+               <%})%>
+                
               </tr>
              
             
