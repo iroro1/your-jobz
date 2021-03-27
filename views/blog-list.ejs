@@ -29,7 +29,7 @@
         <% })%>
 
     <div class="vertical-space-25"></div>
-    <div class="job-list">
+    <div class="blog-list">
         <% if(posts.totalPagesCount>1 ){%>
         <ul class="pagination justify-content-end margin-auto">
             <% if(posts.pageNumber===1 ){%>
@@ -41,11 +41,11 @@
             <li class="page-item"><a class="page-link " ><i class="fa fa-chevron-left"></i></a></li>
             <%}else{%>
                 <li class="page-item ">
-                    <a class="page-link d-flex  pl-2" href="/joblist-1-0">
+                    <a class="page-link d-flex  pl-2" href="/bloglist-1-0">
                         <i class="fa fa-chevron-left"></i> 
                         <i class="fa fa-chevron-left pr-4"></i>
                     </a></li>
-                <li class="page-item"><a class="page-link " href=" /joblist-<%=posts.pageNumber-1 %>-<%=(posts.data.length)*(posts.pageNumber-1)-posts.data.length %> "><i class="fa fa-chevron-left"></i></a></li>
+                <li class="page-item"><a class="page-link " href=" /bloglist-<%=posts.pageNumber-1 %>-<%=(posts.data.length)*(posts.pageNumber-1)-posts.data.length %> "><i class="fa fa-chevron-left"></i></a></li>
             <%}%>
         <% for(let i=posts.pageNumber; i<=posts.totalPagesCount; i++){%>
             
@@ -54,7 +54,7 @@
             <% if(posts.pageNumber === i){%>
                 <li class="page-item"><a class="page-link active" ><%=i %></a></li>
             <%}else {%>
-                <li class="page-item"><a class="page-link " href="/joblist-<%=i %>-<%= (posts.data.length * i) -posts.data.length
+                <li class="page-item"><a class="page-link " href="/bloglist-<%=i %>-<%= (posts.data.length * i) -posts.data.length
                     %>"><%=i %></a></li>
             <%}%>
             <%}%>
@@ -69,9 +69,9 @@
             </a></li>
     
         <%}else{%>
-            <li class="page-item"><a class="page-link" href="/joblist-<%=posts.pageNumber+1 %>-<%= (posts.start+posts.data.length) %>"><i class="fa fa-chevron-right"></i></a></li>
+            <li class="page-item"><a class="page-link" href="/bloglist-<%=posts.pageNumber+1 %>-<%= (posts.start+posts.data.length) %>"><i class="fa fa-chevron-right"></i></a></li>
             <li class="page-item  ">
-                <a class="page-link d-flex pl-2" href="/joblist-<%=posts.totalPagesCount%>-<%=endStart%>">
+                <a class="page-link d-flex pl-2" href="/bloglist-<%=posts.totalPagesCount%>-<%=endStart%>">
                     <i class="fa fa-chevron-right "></i> 
                     <i class="fa fa-chevron-right  pr-4"></i>
                 </a></li>

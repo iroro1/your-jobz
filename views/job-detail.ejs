@@ -17,7 +17,9 @@
     <div class="container background-color-full-white job-Details">
     <div class="Exclusive-Product">
     <h3><%=post.title%> Needed</h3>
+    <% if(post.applyLink){%>"
     <a href="<%=post.applyLink%>" class="Apply-Now">Apply Now</a>
+    <%}%>"
     <h6 class="font-color-orange"><%=post.company%></h6>
     <span class="text">
         <%  location.lagos.forEach(i=>{%>

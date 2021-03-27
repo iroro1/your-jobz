@@ -4369,7 +4369,7 @@ input[type="email"]:focus, input[type="password"]:focus,input[type="text"]:focus
 
 }
 @media (max-width:360px){
-  
+
     .dashboard{
         margin: 0 auto;
     }
@@ -4437,3 +4437,10 @@ input[type="email"]:focus, input[type="password"]:focus,input[type="text"]:focus
 
     
 }
+#not-found{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+ }

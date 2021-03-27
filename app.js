@@ -49,7 +49,7 @@ app.use(passport.session());
 // PRODUCTIONDB
 // DEVDB
 // MongoDB Connect
-mongoose.connect(process.env.PRODUCTIONDB, {
+mongoose.connect(process.env.DEVDB, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
@@ -301,7 +301,6 @@ app
             posts.forEach(post=>j.unshift(post))
             let pNum = Number(arr[1]), numPerPage=15, start= Number(arr[2])
             posts = paginate(j,pNum,numPerPage,start)
-            console.log(posts)
             const endStart = (((pNum*posts.data.length)*posts.totalPagesCount) -posts.data.length )
             res.render('blog-list',{auth: req.user, posts, endStart})
             } catch (error) {
