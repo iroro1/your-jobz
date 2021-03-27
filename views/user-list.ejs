@@ -19,12 +19,12 @@
             <div class="ml-auto">
 
               <% if(user.isAdmin){%>
-                <a data-toggle="modal" data-target="#modalLocAd<%= auth._id%>"  class="btn bg-danger"><i class="fa fa-lock text-white"> Lock Admin</i></a>
+                <a data-toggle="modal" data-target="#modalLocAd<%= user._id%>"  class="btn bg-danger"><i class="fa fa-lock text-white"> Lock Admin</i></a>
               <%}else{%>
-                <a data-toggle="modal" data-target="#myModal2<%= auth._id%>"  class="btn background-color-orange"><i class="fa fa-cog text-white"> Make Admin</i></a>
+                <a data-toggle="modal" data-target="#myModal2<%= user._id%>"  class="btn background-color-orange"><i class="fa fa-cog text-white"> Make Admin</i></a>
               <%}%>
 
-              <a data-toggle="modal" data-target="#myModal<%= auth._id%>"  class="btn btn-danger ml-auto text-white"><i class="fa fa-trash"></i></a>
+              <a data-toggle="modal" data-target="#myModal<%= user._id%>"  class="btn btn-danger ml-auto text-white"><i class="fa fa-trash"></i></a>
 
             </div>
         </div>
@@ -41,7 +41,7 @@
     </div>
     <div
     class="modal fade"
-    id="myModal<%= auth._id%>"
+    id="myModal<%= user._id%>"
     tabindex="-1"
     role="dialog"
     aria-labelledby="exampleModalCenterTitle"
@@ -75,7 +75,7 @@
   </div>
     <div
     class="modal fade"
-    id="modalLocAd<%= auth._id%>"
+    id="modalLocAd<%= user._id%>"
     tabindex="-1"
     role="dialog"
     aria-labelledby="exampleModalCenterTitle"
@@ -109,7 +109,7 @@
   </div>
     <div
     class="modal fade"
-    id="myModal2<%= auth._id%>"
+    id="myModal2<%= user._id%>"
     tabindex="-1"
     role="dialog"
     aria-labelledby="exampleModalCenterTitle"

@@ -120,7 +120,6 @@ app
     let err,suc = ""
     if(req.headers.referer==='/register')
     err = "Your registration failed, Please try again."
-    // console.log(Object.entries(location.nigeria))
     res.render("register", { auth: req.user, location, err , suc});
   })
   .get("/"+process.env.REGISTERROOT, (req, res) => {
@@ -128,35 +127,41 @@ app
       res.render("register-root", { auth: req.user, location, err , suc});
   })
   .post("/register", async(req, res) => {
-    console.log(req.body)
-    const usr = await findOneObject(User,'username',req.body.username)
-    if (usr) {
-      res.send("User already exist");
-      res.redirect("/login");
-    } else {
-      User.register(
-        {
-          username: req.body.username,
-          alias: req.body.alias,
-          phone: req.body.phone,
-          gender: req.body.gender,
-          highest_level_education: req.body.education,
-          location: req.body.location,
-          isAdmin: false,
-          isRoot: req.body.rumble? req.body.rumble: false,
-          dateJoined: new Date()
-        },
-        req.body.password,
-        (err, user) => {
-          if (err) {
-            res.redirect("/register");// Error redirects to register
-          } else {
-            passport.authenticate("local")(req, res, () => {
-              res.redirect('/dashboard') // Success Auto login
-            });
+
+    try {
+      const usr = await findOneObject(User,'username',req.body.username)
+      if (usr._doc) {
+        console.log(usr._doc)
+        const err = "User already exist  please try again with a different email."
+        res.render('register',{err, auth:req.user,location})
+      } else {
+        User.register(
+          {
+            username: req.body.username,
+            alias: req.body.alias,
+            phone: req.body.phone,
+            gender: req.body.gender,
+            highest_level_education: req.body.education,
+            location: req.body.location,
+            isAdmin: false,
+            isRoot: req.body.rumble? req.body.rumble: false,
+            dateJoined: new Date()
+          },
+          req.body.password,
+          (err, user) => {
+            if (err) {
+              res.redirect("/register");// Error redirects to register
+            } else {
+              passport.authenticate("local")(req, res, () => {
+                res.redirect('/dashboard') // Success Auto login
+              });
+            }
           }
-        }
-      );
+        );
+      }
+      
+    } catch (error) {
+      res.render("404",{auth:req.user})
     }
   })
   .get('/dashboard', async (req,res)=>{
