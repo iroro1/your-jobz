@@ -112,6 +112,36 @@ const paginate = (list,pageNumber,numberPerPage,start) =>{
   result.totalPagesCount = totalPagesCount
   return result
 }
+
+const checkTimeDiff = (timeCheck, digit ,criteria) =>{
+  const month = new Date().getUTCMonth()
+  const day = new Date().getUTCDate()
+  const hours = new Date().getUTCHours()
+  const sec = new Date().getUTCSeconds()
+
+   const monthO = timeCheck.getUTCMonth()
+   const dayO = timeCheck.getUTCDate()
+   const hoursO = timeCheck.getUTCHours()
+   const secO = timeCheck.getUTCSeconds()
+
+   if(criteria === 'hours'){
+      if(month>monthO && day >= dayO){
+        const diff = hours - hoursO
+        if(diff< digit){
+       
+        }
+      }
+      else  if(month>monthO && day >= dayO){
+
+      }
+   }
+   else if(criteria === 'days'){
+
+   }
+   else if(criteria === 'months'){
+
+   }
+}
 // DB FUNC
 const findOneObject = async(dbModel, searchField, searchArg,) =>{
   try {
@@ -193,5 +223,5 @@ module.exports = {
   findAllObjects,
   isAuthenticated,
   deleteOneObject,
-  filterObj
+  checkTimeDiff
 };

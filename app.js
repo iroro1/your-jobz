@@ -5,7 +5,7 @@ const ejs = require("ejs");
 const mongoose = require("mongoose");
 
 const nodemailer = require("nodemailer");
-const {findOneObject,  generateToken, generateRandomNum, errorReport, updateOneObject,formatDate, createObject, findAllObjects, deleteOneObject, updateItemObjectFromForm, filterObj, paginate} = require('./utilities/functions')
+const {findOneObject,  generateToken, generateRandomNum, errorReport, updateOneObject,formatDate, createObject, findAllObjects, deleteOneObject, updateItemObjectFromForm, filterObj, paginate, checkTimeDiff} = require('./utilities/functions')
 // 
 const location = require('./utilities/location')
 const category = require('./utilities/category')
@@ -49,7 +49,7 @@ app.use(passport.session());
 // PRODUCTIONDB
 // DEVDB
 // MongoDB Connect
-mongoose.connect(process.env.DEVDB, {
+mongoose.connect(process.env.PRODUCTIONDB, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
@@ -288,6 +288,26 @@ app
               jobs = paginate(j,pNum,numPerPage,start)
               const endStart = (((pNum*jobs.data.length)*jobs.totalPagesCount) -jobs.data.length )
               res.render('job-list',{auth: req.user, jobs, typeOfJob:type, location, category, endStart})
+              
+            } catch (error) {
+              res.render('404', {auth:req.user, error})
+            }
+          } 
+          else if(req.params.tk.startsWith('24hrjobs')){ 
+            try {
+              const arr = req.params.tk.split('-')
+              let jobs = await findAllObjects(Job)
+             
+              const full = jobs.map(j=>{
+                console.log(checkTimeDiff(j.datePosted,24, 'hours'))
+              })
+              // console.log(day, hours , sec)
+              // const j = []
+              // full.forEach(post=>j.unshift(post))
+              // let pNum = Number(arr[1]), numPerPage=10, start= Number(arr[2])
+              // jobs = paginate(j,pNum,numPerPage,start)
+              // const endStart = (((pNum*jobs.data.length)*jobs.totalPagesCount) -jobs.data.length )
+              // res.render('job-list',{auth: req.user, jobs, typeOfJob:type, location, category, endStart})
               
             } catch (error) {
               res.render('404', {auth:req.user, error})
